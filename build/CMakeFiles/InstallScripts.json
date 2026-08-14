@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/nakshatra/Projects/cycler_app/child_node/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -1,0 +1,3 @@
+/home/nakshatra/Projects/cycler_app/child_node/build/CMakeFiles/app.dir
+/home/nakshatra/Projects/cycler_app/child_node/build/CMakeFiles/edit_cache.dir
+/home/nakshatra/Projects/cycler_app/child_node/build/CMakeFiles/rebuild_cache.dir
