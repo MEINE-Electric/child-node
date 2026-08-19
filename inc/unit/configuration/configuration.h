@@ -33,4 +33,5 @@ private:
     void checkForEvents();
     void handleConfig(const std::string& message);
     void handleExperiment(const std::string& message);
+    void handleControl(const std::string& message);
 };

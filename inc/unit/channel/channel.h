@@ -1,7 +1,12 @@
 #pragma once
 
 #include <chrono>
+#include <condition_variable>
+#include <mutex>
+#include <queue>
+#include <stop_token>
 #include <string>
+#include <thread>
 
 #include "drivers/load.h"
 #include "drivers/supply.h"
@@ -16,9 +21,9 @@ public:
     ~Channel();
 
     // -------- Helper Structs -------- 
-    struct data
+    struct Data
     {
-        int channelNumber;
+        std::string channelNumber;
         std::string state;
         
         float loadVoltage;
@@ -34,25 +39,12 @@ public:
         int remainingTime;
         int totalTime;
 
-        int userStepCount;
-        int generatedStepCount;
+        int currentStep;
         int loopCount;
-    };
-    
-    // -------- Execution & Updation -------- 
-    void run();
-    void execute(const Charge& cmd);
-    void execute(const Discharge& cmd);
-    void execute(const Rest& cmd);
-    void execute(const Hold& cmd);
-    void execute(const Goto& cmd);
+    } data;
 
     // -------- Control commands -------- 
-    void startExperiment();
-    void pauseExperiment();
-    void resumeExperiment();
-    void stopExperiment();
-    void skipStep();
+    void enqueueCommand(const std::string& command);
 
     // -------- Experiment transactions -------- 
     bool updateExperiment(const std::vector<Command>& experiment);
@@ -60,10 +52,15 @@ public:
 
     // -------- Logging --------
     std::string returnDevices();
+    Data getLatestData();
+
+    //  -------- Thread Functions --------
+    void startWorkerThread();
+    void stopWorkerThread();
 
     // -------- Getter -------
-    std::string getChannelID() {return channelID;}
-    bool isRunning() {return running; }
+    std::string getChannelID() const {return channelID;}
+    bool isInProcess() const {return inProcess; }
     
 private:
     std::string channelID;
@@ -74,6 +71,9 @@ private:
     int loadChannel;
 
     std::vector<Command> experiment;
+    std::queue<std::string> controlQueue;
+
+    std::jthread workerThread;
 
     enum class State
     {
@@ -83,7 +83,8 @@ private:
         Holding,
         Resting,
         Finished,
-        Error
+        Error,
+        Paused
     };
 
     // -------- Mutable state for the active experiment --------
@@ -112,11 +113,34 @@ private:
     // -------- Channel Status --------
     bool ready = false; 
     bool running = false;
+    bool inProcess = false;
 
     // -------- Polling Function --------
     void polling();
 
-    // -------- Experiment Stop --------
+    // -------- Execution & Updation -------- 
+    void run(std::stop_token stop);
+    void execute(const Charge& cmd);
+    void execute(const Discharge& cmd);
+    void execute(const Rest& cmd);
+    void execute(const Hold& cmd);
+    void execute(const Goto& cmd);
+
+    // -------- Experiment Controls --------
+    bool startExperiment();
+    bool pauseExperiment();
+    bool resumeExperiment();
+    bool stopExperiment();
+    bool skipStep();
     void finishExperiment();
     void nextStep();
+
+    // -------- Thread Controls --------
+    std::mutex controlMutex;
+    std::condition_variable controlCV;
+    void checkControlQueue();
+    void waitForControl(std::stop_token& stop);
+
+    // -------- Helper Functions --------
+    std::string stateToString(State state);
 };

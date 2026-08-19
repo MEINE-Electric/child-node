@@ -146,3 +146,28 @@ std::optional<std::unordered_map<std::string, Config>> parseJSONToConfig(const s
         return std::nullopt;
     }
 }
+
+// String to Control Command parser
+std::optional<std::unordered_map<std::string, std::string>> parseJSONToControl(const std::string& message)
+{
+    try
+    {
+        const nlohmann::json jsonParsed = nlohmann::json::parse(message);
+
+        std::unordered_map<std::string, std::string> newControl;
+
+        newControl["channelID"] = jsonParsed.at("channelID").get<std::string>();
+        newControl["command"]   = jsonParsed.at("command").get<std::string>();
+
+        return newControl;
+    }
+    catch (const nlohmann::json::exception& e)
+    {
+        Logger::logger().log_json()->error(
+            "Failed to parse control: {}",
+            e.what()
+        );
+
+        return std::nullopt;
+    }
+}

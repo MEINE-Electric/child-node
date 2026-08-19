@@ -1,4 +1,5 @@
 #include <chrono>
+#include <stop_token>
 #include <thread>
 
 #include "drivers/load.h"
@@ -15,34 +16,126 @@ Channel::Channel(Load& load, Supply& supply, Module& module, int channel, std::s
 Channel::~Channel()
 {    
     ready = false;
+    stopWorkerThread();
 }
 
 // Public Functions
-void Channel::run()
+bool Channel::updateExperiment(const std::vector<Command>& experiment)
 {
-    if (!ready){
-        Logger::logger().log_channel()->error("Channel {} is not ready yet",channelID);
-        return;
+    if (running)
+    {
+        return false;
     }
 
-    running = true;
+    this->experiment = std::move(experiment);
+    ready = true;
+    return true;
+}
 
-    while (running)
+void Channel::deleteExperiment()
+{
+    if(!running)
     {
-        if(runtime.state != State::Idle && runtime.state != State::Finished)
+        experiment.clear();
+        ready = false;
+    }
+}
+
+std::string Channel::returnDevices()
+{
+    std::string devices = "Channel:" + channelID + "\n" + "Load:" + load.getIDN() + "\n" + "Supply:" + supply.getIDN() + "\n" + "Module:" + module.getIDN();
+    return devices;
+}
+
+Channel::Data Channel::getLatestData()
+{
+    data.channelNumber = channelID;
+    data.state = stateToString(runtime.state);
+
+    data.loadVoltage = runtime.loadVoltage;
+    data.loadCurrent = runtime.loadCurrent;
+    data.supplyVoltage = runtime.supplyVoltage;
+    data.supplyCurrent = runtime.supplyCurrent;
+
+    data.loadState = runtime.loadEnabled ? "on" : "off";
+    data.supplyState = runtime.supplyEnabled ? "on" : "off";
+    data.moduleState = runtime.moduleState == Module::State::OFF ? "off" :
+                        runtime.moduleState == Module::State::DISCHARGE ? "discharge" :
+                        runtime.moduleState == Module::State::CHARGE ? "charge" : "error";
+    
+    data.elapsedTime = runtime.timeElapsed;
+    data.remainingTime = runtime.totalDuration - runtime.timeElapsed;
+    data.totalTime = runtime.totalDuration;
+
+    data.currentStep = runtime.currentStep;
+    data.loopCount = runtime.currentLoop;
+
+    return data;
+}
+
+void Channel::enqueueCommand(const std::string& command)
+{
+    {
+        std::lock_guard lock(controlMutex);
+        controlQueue.push(command);
+    }
+
+    controlCV.notify_one();
+}
+
+void Channel::startWorkerThread()
+{
+    if (workerThread.joinable())
+    {
+        Logger::logger().log_channel()->warn("Channel-{} worker thread is already running",channelID);
+        return;
+    }
+    workerThread = std::jthread([this](std::stop_token stop)
+    {
+        run(stop);
+    });
+    Logger::logger().log_channel()->info("Channel-{} worker thread started",channelID);
+}
+
+void Channel::stopWorkerThread()
+{
+    if (workerThread.joinable())
+    {
+        workerThread.request_stop();
+        workerThread.join();
+        Logger::logger().log_channel()->info("Channel-{} worker thread stopped",channelID);
+    }
+}
+
+// Private Functions
+void Channel::run(std::stop_token stop)
+{
+    while (!stop.stop_requested())
+    {
+        // Control command check
+        checkControlQueue();
+        if (!running)
+        {
+            waitForControl(stop);
+            continue;
+        }  
+
+        // Polling Block
+        if(runtime.state != State::Idle && runtime.state != State::Finished && running)
         {
             polling();
+            runtime.timeElapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - runtime.startTimePoint).count();
         }
-
-        runtime.timeElapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - runtime.startTimePoint).count();
         
-        if(runtime.state == State::Idle){ // Idle or Finished State
+        // Condition check block
+        if(running && runtime.state == State::Idle)
+        {
             std::visit([this](const auto& cmd)
             {
                 execute(cmd);
             }, experiment[runtime.currentStep]);
         }
-        else // Running State
+        else if(runtime.state != State::Paused) // Running State
         {
             if(runtime.timeElapsed >= runtime.totalDuration)
             {
@@ -72,10 +165,49 @@ void Channel::run()
                     channelID, runtime.loadVoltage, runtime.thresholdVoltage);
                 nextStep();
             }
+        }  
+    }
+}
+
+void Channel::checkControlQueue()
+{
+    while (true)
+    {
+        // Calculate time elapsed
+        std::string controlCmd;
+
+        {
+            std::lock_guard lock(controlMutex);
+
+            if (controlQueue.empty())
+                break;
+
+            controlCmd = std::move(controlQueue.front());
+            controlQueue.pop();
         }
-    }  
-    
-    std::this_thread::sleep_for(std::chrono::milliseconds(250));
+
+        if (controlCmd == "start")
+            startExperiment();
+        else if (controlCmd == "stop")
+            stopExperiment();
+        else if (controlCmd == "pause")
+            pauseExperiment();
+        else if (controlCmd == "resume")
+            resumeExperiment();
+        else if (controlCmd == "skip")
+            skipStep();
+    }
+}
+
+void Channel::waitForControl(std::stop_token& stop)
+{
+    {
+        std::unique_lock lock(controlMutex);
+        controlCV.wait(lock, [this, &stop]()
+        {
+            return !controlQueue.empty() || stop.stop_requested();
+        });
+    }
 }
 
 void Channel::execute(const Charge& cmd)
@@ -95,7 +227,7 @@ void Channel::execute(const Charge& cmd)
     runtime.thresholdVoltage = cmd.cutoffVoltage;
     runtime.totalDuration = cmd.duration;
 
-    runtime.startTimePoint = std::chrono::steady_clock::now();
+    runtime.startTimePoint = std::chrono::steady_clock::now() - std::chrono::seconds(runtime.timeElapsed);
     Logger::logger().log_channel()->debug(
         "Channel {} starting charge: {:.3f} V, {:.3f} A, cutoff {:.3f} V, max {} s",
         channelID, cmd.voltage, cmd.current, cmd.cutoffVoltage, cmd.duration);
@@ -117,7 +249,7 @@ void Channel::execute(const Discharge& cmd)
     runtime.thresholdVoltage = cmd.cutoffVoltage;
     runtime.totalDuration = cmd.duration;
 
-    runtime.startTimePoint = std::chrono::steady_clock::now();
+    runtime.startTimePoint = std::chrono::steady_clock::now() - std::chrono::seconds(runtime.timeElapsed);
     Logger::logger().log_channel()->debug(
         "Channel {} starting discharge: {:.3f} A, cutoff {:.3f} V, max {} s",
         channelID, cmd.current, cmd.cutoffVoltage, cmd.duration);
@@ -139,7 +271,7 @@ void Channel::execute(const Hold& cmd)
     runtime.thresholdVoltage = cmd.cutoffVoltage;
     runtime.totalDuration = cmd.duration;
 
-    runtime.startTimePoint = std::chrono::steady_clock::now();
+    runtime.startTimePoint = std::chrono::steady_clock::now() - std::chrono::seconds(runtime.timeElapsed);
     Logger::logger().log_channel()->debug(
         "Channel {} starting hold: cutoff {:.3f} V, max {} s",
         channelID, cmd.cutoffVoltage, cmd.duration);
@@ -149,6 +281,8 @@ void Channel::execute(const Rest& cmd)
 {
     supply.disable();
     load.disable(loadChannel);
+    runtime.supplyEnabled = false;
+    runtime.loadEnabled = false;
 
     module.setToOff();
     runtime.moduleState = Module::State::OFF;
@@ -156,7 +290,7 @@ void Channel::execute(const Rest& cmd)
     runtime.state = State::Resting;
     runtime.totalDuration = cmd.duration;
 
-    runtime.startTimePoint = std::chrono::steady_clock::now();
+    runtime.startTimePoint = std::chrono::steady_clock::now() - std::chrono::seconds(runtime.timeElapsed);
     Logger::logger().log_channel()->debug(
         "Channel {} starting rest: max {} s", channelID, cmd.duration);
 }
@@ -189,54 +323,6 @@ void Channel::execute(const Goto& cmd)
     return;
 } 
 
-void startExperiment()
-{
-    
-}
-void pauseExperiment()
-{
-
-}
-void resumeExperiment()
-{
-
-}
-void stopExperiment()
-{
-
-}
-void skipStep()
-{
-
-}
-
-bool Channel::updateExperiment(const std::vector<Command>& experiment)
-{
-    if (running)
-    {
-        return false;
-    }
-
-    this->experiment = std::move(experiment);
-    ready = true;
-    return true;
-}
-
-void Channel::deleteExperiment()
-{
-    if(!running)
-    {
-        experiment.clear();
-        ready = false;
-    }
-}
-
-std::string Channel::returnDevices()
-{
-    std::string devices = "Channel:" + channelID + "\n" + "Load:" + load.getIDN() + "\n" + "Supply:" + supply.getIDN() + "\n" + "Module:" + module.getIDN();
-    return devices;
-}
-// Private Functions
 void Channel::polling()
 {
     load.restoreState();
@@ -265,26 +351,100 @@ void Channel::polling()
         channelID, runtime.loadVoltage, runtime.loadCurrent, runtime.supplyVoltage, runtime.supplyCurrent);
 }
 
+bool Channel::startExperiment()
+{
+    if (runtime.state != State::Idle)
+    {
+        return false;
+    }
+
+    if (!ready)
+    {
+        Logger::logger().log_channel()->error("Channel {} is not ready yet",channelID);
+        return false;
+    }
+
+
+    inProcess = true;
+    running = true;
+    return true;
+}
+
+bool Channel::pauseExperiment()
+{
+    if (runtime.state == State::Idle ||
+        runtime.state == State::Paused ||
+        runtime.state == State::Finished)
+    {
+        return false;
+    }
+
+    supply.disable();
+    load.disable(loadChannel);
+    module.setToOff();
+
+    runtime.state = State::Paused;
+    runtime.supplyEnabled = false;
+    runtime.loadEnabled = false;
+    runtime.moduleState = Module::OFF;
+
+    running = false;
+
+    runtime.timeElapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - runtime.startTimePoint).count();
+    return true;
+}
+
+bool Channel::resumeExperiment()
+{
+    if (runtime.state != State::Paused)
+    {
+        return false;
+    }
+
+    running = true;
+    runtime.state = State::Idle;
+
+    return true;
+}
+
+bool Channel::stopExperiment()
+{
+    if(runtime.state == State::Finished)
+    {
+        return false;
+    }
+
+    finishExperiment();
+    return true;
+}
+
+bool Channel::skipStep()
+{
+    if(runtime.state == State::Paused || runtime.state == State::Idle || runtime.state == State::Finished)
+    {
+        return false;
+    }
+    nextStep();
+    return true;
+}
+
 void Channel::finishExperiment()
 {
     supply.disable();
     load.disable(loadChannel);
     module.setToOff();
 
-    runtime.supplyEnabled = false;
-    runtime.loadEnabled = false;
-    runtime.moduleState = Module::State::OFF;
-
     running = false;
-    runtime.state = State::Finished;
 
-    runtime.currentStep = 0;
-    runtime.timeElapsed = 0;
+    runtime = {};
+    inProcess = false;
+    runtime.state = State::Finished;
 }
 
 void Channel::nextStep()
 {
     ++runtime.currentStep;
+    runtime.timeElapsed = 0;
 
     if (runtime.currentStep >= experiment.size())
     {
@@ -295,4 +455,20 @@ void Channel::nextStep()
     }
 
     runtime.state = State::Idle;
+}
+
+std::string Channel::stateToString(State state)
+{
+    switch (state)
+    {
+        case State::Idle:         return "Idle";
+        case State::Charging:     return "Charging";
+        case State::Discharging:  return "Discharging";
+        case State::Holding:      return "Holding";
+        case State::Resting:      return "Resting";
+        case State::Paused:       return "Paused";
+        case State::Finished:     return "Finished";
+        case State::Error:        return "Error";
+        default:                  return "Unknown";
+    }
 }

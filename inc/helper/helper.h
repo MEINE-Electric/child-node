@@ -68,3 +68,6 @@ std::optional<std::pair<std::string, std::vector<Command>>> parseJSONToCommand(c
 
 // -------- String to Command parser --------
 std::optional<std::unordered_map<std::string, Config>> parseJSONToConfig(const std::string& json);
+
+// -------- String to Control Command parser --------
+std::optional<std::unordered_map<std::string, std::string>> parseJSONToControl(const std::string& json);

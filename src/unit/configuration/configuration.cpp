@@ -27,13 +27,12 @@ void UnitConfiguration::startEventWatchdog()
 
     eventWatchdog = std::jthread([this](std::stop_token stop)
     {
+        Logger::logger().log_unit()->info("Event watchdog started");
         while (!stop.stop_requested())
         {
             checkForEvents();
         }
     });
-
-    Logger::logger().log_unit()->info("Event watchdog started");
 }
 
 void UnitConfiguration::stopEventWatchdog()
@@ -53,24 +52,40 @@ void UnitConfiguration::publishFeedback(const std::string& section, const std::s
 
 void UnitConfiguration::checkForEvents()
 {
-    const auto newEvent = mqtt.waitForEventFor(std::chrono::milliseconds(100));
-    if (!newEvent)
+    const auto newEvent = mqtt.waitForEvent();
+
+    if(!newEvent)
     {
         return;
     }
 
-    if(newEvent->first == "config")
+    if (newEvent->first == "config")
     {
         handleConfig(newEvent->second);
     }
-    else if(newEvent->first == "experiment")
+    else if (newEvent->first == "experiment")
     {
         handleExperiment(newEvent->second);
+    }
+    else if (newEvent->first == "control")
+    {
+        handleControl(newEvent->second);
     }
 }
 
 void UnitConfiguration::handleConfig(const std::string& message)
 {
+    // Reject if any channel is running
+    for (const auto& [channelID, channel] : channelList)
+    {
+        if (channel.isInProcess())
+        {
+            Logger::logger().log_unit()->error("Configuration rejected: channel {} has an experiment in process", channelID);
+            publishFeedback("config", fmt::format("CONFIG_ERROR: channel {} has an experiment in process",channelID));
+            return;
+        }
+    }
+
     // Parse
     const auto parsedConfig = parseJSONToConfig(message);
 
@@ -192,10 +207,20 @@ void UnitConfiguration::handleConfig(const std::string& message)
     }
 
     // Commit
+    for (auto& [id, channel] : channelList)
+    {
+        channel.stopWorkerThread();
+    }
+
     loadList = std::move(newLoadList);
     supplyList = std::move(newSupplyList);
     moduleList = std::move(newModuleList);
     channelList = std::move(newChannelList);
+
+    for (auto& [id, channel] : channelList)
+    {
+        channel.startWorkerThread();
+    }
 
     Logger::logger().log_unit()->info("Configuration successfully replaced");
     publishFeedback("config", "CONFIG_OK: configuration successfully replaced");
@@ -230,7 +255,7 @@ void UnitConfiguration::handleExperiment(const std::string& message)
 
     // Updation
     Channel& ch = channelList.at(channelID);
-    if(ch.isRunning())
+    if(ch.isInProcess())
     {
         Logger::logger().log_unit()->error("Experiment rejected: experiment already running at {}",channelID);
         publishFeedback("experiment", fmt::format("EXPERIMENT_ERROR: channel {} is already running", channelID));
@@ -240,4 +265,34 @@ void UnitConfiguration::handleExperiment(const std::string& message)
     channelList.at(channelID).updateExperiment(commands);
     Logger::logger().log_unit()->info("Experiment loaded for channel {}", channelID);
     publishFeedback("experiment", fmt::format("EXPERIMENT_OK: loaded for channel {}", channelID));
+}
+
+void UnitConfiguration::handleControl(const std::string& message)
+{
+    const auto parsedCommand = parseJSONToControl(message);
+
+    if (!parsedCommand)
+    {
+        Logger::logger().log_unit()->error("Command rejected: invalid JSON or schema");
+        publishFeedback("control", "CONTROL_ERROR: invalid JSON or schema");
+        return;
+    }
+
+    const auto& commandMap = *parsedCommand;
+
+    const auto& channelID = commandMap.at("channelID");
+    const auto& command = commandMap.at("command");
+
+    if (!channelList.contains(channelID))
+    {
+        Logger::logger().log_unit()->error("Command rejected: unknown channel {}",channelID);
+        publishFeedback("control",fmt::format("CONTROL_ERROR: unknown channel {}",channelID));
+        return;
+    }
+
+    channelList.at(channelID).enqueueCommand(command);
+
+    Logger::logger().log_unit()->info("Control command '{}' queued for channel {}", command, channelID);
+
+    publishFeedback("control",fmt::format("CONTROL_OK: command '{}' queued for channel {}",command,channelID));
 }

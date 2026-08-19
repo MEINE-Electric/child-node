@@ -23,8 +23,7 @@ public:
     void message_arrived(mqtt::const_message_ptr msg) override;
 
     // Event handling
-    std::pair<std::string, std::string> waitForEvent();
-    std::optional<std::pair<std::string, std::string>> waitForEventFor(std::chrono::milliseconds timeout);
+    std::optional<std::pair<std::string, std::string>>  waitForEvent();
 
 private:
     std::string broker;

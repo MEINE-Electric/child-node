@@ -141,35 +141,27 @@ void MQTT::message_arrived(mqtt::const_message_ptr msg)
     {
         eventQueue.push(std::make_pair("experiment", msg->to_string()));
     }
+    else if (msg->get_topic() == fmt::format("control/{}", clientId))
+    {
+        eventQueue.push(std::make_pair("control", msg->to_string()));
+    }
 
     eventCV.notify_one();
 }
 
-std::pair<std::string, std::string> MQTT::waitForEvent()
+std::optional<std::pair<std::string, std::string>> MQTT::waitForEvent()
 {
-    std::unique_lock<std::mutex> lock(eventMutex);
+    std::unique_lock lock(eventMutex);
 
-    eventCV.wait(lock, [this]()
+    if (!eventCV.wait_for(lock, std::chrono::milliseconds(100), [this]()
     {
         return !eventQueue.empty();
-    });
-
-    auto event = eventQueue.front();
-    eventQueue.pop();
-
-    return event;
-}
-
-std::optional<std::pair<std::string, std::string>> MQTT::waitForEventFor(std::chrono::milliseconds timeout)
-{
-    std::unique_lock<std::mutex> lock(eventMutex);
-
-    if (!eventCV.wait_for(lock, timeout, [this]() { return !eventQueue.empty(); }))
+    }))
     {
         return std::nullopt;
     }
 
-    auto event = eventQueue.front();
+    auto event = std::move(eventQueue.front());
     eventQueue.pop();
 
     return event;
