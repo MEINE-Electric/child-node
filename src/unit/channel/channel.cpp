@@ -41,14 +41,16 @@ void Channel::deleteExperiment()
     }
 }
 
-std::string Channel::returnDevices()
+std::string Channel::returnDevices() const
 {
     std::string devices = "Channel:" + channelID + "\n" + "Load:" + load.getIDN() + "\n" + "Supply:" + supply.getIDN() + "\n" + "Module:" + module.getIDN();
     return devices;
 }
 
-Channel::Data Channel::getLatestData()
+Channel::Data Channel::getLatestData() const
 {
+    Data data;
+
     data.channelNumber = channelID;
     data.state = stateToString(runtime.state);
 
@@ -457,7 +459,7 @@ void Channel::nextStep()
     runtime.state = State::Idle;
 }
 
-std::string Channel::stateToString(State state)
+std::string Channel::stateToString(State state) const
 {
     switch (state)
     {
@@ -471,4 +473,29 @@ std::string Channel::stateToString(State state)
         case State::Error:        return "Error";
         default:                  return "Unknown";
     }
+}
+
+nlohmann::json Channel::Data::toJson() const
+{
+    return {
+        {"channelNumber", channelNumber},
+        {"state", state},
+
+        {"loadVoltage", loadVoltage},
+        {"loadCurrent", loadCurrent},
+
+        {"supplyVoltage", supplyVoltage},
+        {"supplyCurrent", supplyCurrent},
+
+        {"loadState", loadState},
+        {"supplyState", supplyState},
+        {"moduleState", moduleState},
+
+        {"elapsedTime", elapsedTime},
+        {"remainingTime", remainingTime},
+        {"totalTime", totalTime},
+
+        {"currentStep", currentStep},
+        {"loopCount", loopCount}
+    };
 }

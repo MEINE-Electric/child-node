@@ -1,49 +1,55 @@
 #include <fmt/format.h>
-#include <string>
-#include <termios.h>
 #include <nlohmann/json.hpp>
 
-#include "helper/logger/logger.h"
 #include "mqtt/mqtt.h"
-#include "registry/registry.h"
+#include "helper/logger/logger.h"
 #include "unit/configuration/configuration.h"
 
-#define SETUP "1"
+#define NODE_ID "1"
+
+enum InitStage {
+    STARTING,
+    MQTT_CONNECTED,
+    AWAITING_CONFIGURATION,
+    CONFIGURATION_LOADED,
+    READY,
+    ERROR
+};
+
+void publishStatus(MQTT& mqtt, const std::string& nodeID, const std::string& message)
+{
+    nlohmann::json status = {
+        {"nodeID", nodeID},
+        {"status", }
+    };
+
+    mqtt.publishRetained(
+        fmt::format("status/{}", nodeID),
+        status.dump()
+    );
+}
 
 int main()
 {
     Logger::logger().init();
 
-    // Start MQTT
-    MQTT mqtt("127.0.0.1",SETUP);
+    // Initializing node
+    InitStage stage = InitStage::STARTING;
+
+    // MQTT
+    MQTT mqtt("127.0.0.1", NODE_ID);
     mqtt.connect();
-    // MQTT subscribe to config receival
-    mqtt.subscribe(fmt::format("config/{}",SETUP));
-    mqtt.subscribe(fmt::format("experiment/{}",SETUP));
+    stage = InitStage::MQTT_CONNECTED;
 
-    // Identify connected devices
-    Registry registry = Registry();
-    registry.initialScan();
-    registry.startWatchdog();
+    mqtt.subscribe(fmt::format("config/{}", NODE_ID));
+    mqtt.subscribe(fmt::format("experiment/{}", NODE_ID));
+    mqtt.subscribe(fmt::format("control/{}", NODE_ID));
+    stage = InitStage::AWAITING_CONFIGURATION;
 
-    nlohmann::json devicesJson = nlohmann::json::array();
-    for (const auto& [port, device] : registry.readDevices())
-    {
-        devicesJson.push_back({
-            {"idn", device.idn},
-            {"port", port},
-            {"baudrate", static_cast<int>(device.baudrate)},
-            {"available", device.available}
-        });
-    }
-
-    mqtt.publishRetained(fmt::format("devices/{}", SETUP), devicesJson.dump());
-    
-    // Get configuration and experiments
-    UnitConfiguration unit(SETUP, mqtt);
+    // Configuring node
+    UnitConfiguration unit(NODE_ID, mqtt);
     unit.startEventWatchdog();
+    unit.startTelemetryThread();
 
     std::cin.get();
-
-    return 0;
 }

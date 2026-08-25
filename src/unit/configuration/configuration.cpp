@@ -1,3 +1,4 @@
+#include <shared_mutex>
 #include <string>
 #include <exception>
 #include <unordered_set>
@@ -15,6 +16,7 @@ UnitConfiguration::UnitConfiguration(std::string nodeID, MQTT& mqtt)
 UnitConfiguration::~UnitConfiguration()
 {
     stopEventWatchdog();
+    stopTelemetryThread();
 }
 
 void UnitConfiguration::startEventWatchdog()
@@ -43,6 +45,56 @@ void UnitConfiguration::stopEventWatchdog()
         eventWatchdog.join();
         Logger::logger().log_unit()->info("Event watchdog stopped");
     }
+}
+
+void UnitConfiguration::startTelemetryThread()
+{
+    if (telemetryThread.joinable())
+    {
+        Logger::logger().log_unit()->warn("Telemetry thread is already running");
+        return;
+    }
+
+    telemetryThread = std::jthread([this](std::stop_token stop)
+    {
+        Logger::logger().log_unit()->info("Telemetry thread started");
+        while (!stop.stop_requested())
+        {
+            std::vector<Channel::Data> telemetryData;
+
+            {
+                std::lock_guard lock(channelListMutex);
+
+                for (auto& [id, channel] : channelList)
+                {
+                    if (channel.isInProcess())
+                    {
+                        telemetryData.push_back(channel.getLatestData());
+                    }
+                }
+            }
+
+            for (const auto& data : telemetryData)
+            {
+                mqtt.publish(
+                    fmt::format("polling/{}/{}", nodeID, data.channelNumber),
+                    data.toJson().dump()
+                );
+            }
+
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+    });
+}
+
+void UnitConfiguration::stopTelemetryThread()
+{
+    if (telemetryThread.joinable())
+    {
+        telemetryThread.request_stop();
+        telemetryThread.join();
+        Logger::logger().log_unit()->info("Telemetry Thread stopped");
+    }  
 }
 
 void UnitConfiguration::publishFeedback(const std::string& section, const std::string& message)
@@ -75,6 +127,8 @@ void UnitConfiguration::checkForEvents()
 
 void UnitConfiguration::handleConfig(const std::string& message)
 {
+    std::lock_guard lock(channelListMutex);
+
     // Reject if any channel is running
     for (const auto& [channelID, channel] : channelList)
     {
@@ -246,6 +300,8 @@ void UnitConfiguration::handleExperiment(const std::string& message)
     }
 
     // Validation
+    std::lock_guard lock(channelListMutex);
+
     if (!channelList.contains(channelID))
     {
         Logger::logger().log_unit()->error("Experiment rejected: unknown channel {}",channelID);
@@ -283,6 +339,8 @@ void UnitConfiguration::handleControl(const std::string& message)
     const auto& channelID = commandMap.at("channelID");
     const auto& command = commandMap.at("command");
 
+    std::lock_guard lock(channelListMutex);
+
     if (!channelList.contains(channelID))
     {
         Logger::logger().log_unit()->error("Command rejected: unknown channel {}",channelID);
@@ -291,8 +349,6 @@ void UnitConfiguration::handleControl(const std::string& message)
     }
 
     channelList.at(channelID).enqueueCommand(command);
-
     Logger::logger().log_unit()->info("Control command '{}' queued for channel {}", command, channelID);
-
     publishFeedback("control",fmt::format("CONTROL_OK: command '{}' queued for channel {}",command,channelID));
 }

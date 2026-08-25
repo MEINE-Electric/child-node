@@ -21,20 +21,35 @@ MQTT::~MQTT()
 
 bool MQTT::connect()
 {
-    try
+    connectionThread = std::jthread([this](std::stop_token stop)
     {
-        client.connect(connOpts)->wait();
-        connected = true;
+        while (!stop.stop_requested())
+        {
+            if (!connected)
+            {
+                try
+                {
+                    // actual Paho connect
+                    client.connect(connOpts)->wait();
 
-        Logger::logger().log_mqtt()->info("Connected to {}", broker);
-        return true;
-    }
-    catch (const mqtt::exception& e)
-    {
-        Logger::logger().log_mqtt()->error("Connect failed: {}", e.what());
-        connected = false;
-        return false;
-    }
+                    connected = true;
+                    Logger::logger().log_mqtt()->info("Connected");
+                }
+                catch (const std::exception& e)
+                {
+                    connected = false;
+
+                    Logger::logger().log_mqtt()->error(
+                        "Connection failed: {}", e.what());
+
+                    std::this_thread::sleep_for(
+                        std::chrono::seconds(5));
+                }
+            }
+
+            // monitor / wait for disconnect
+        }
+    });
 }
 
 void MQTT::disconnect()

@@ -22,11 +22,13 @@ bool Registry::initialScan() // Run to create an initial field
 
         if (name.starts_with("ttyUSB"))
         {
-            std::lock_guard<std::mutex> lock(mutex);
             Logger::logger().log_registry()->info("Found serial port: {}", entry.path().string());
             
-            Identification identity = getIdentification(entry.path().string());            
-            devices[entry.path().string()] = Instrument({.idn = identity.idn, .port = entry.path().string(),.baudrate = identity.baudrate,.available = true});
+            Identification identity = getIdentification(entry.path().string()); 
+            {
+                std::lock_guard<std::mutex> lock(mutex);
+                devices[entry.path().string()] = Instrument({.idn = identity.idn, .port = entry.path().string(),.baudrate = identity.baudrate,.available = true});
+            }
         }
     }
 
@@ -87,7 +89,9 @@ void Registry::startWatchdog()
     if (watchdogThread.joinable())
         return;
 
-    watchdogThread = std::jthread(&Registry::watchdog, this);
+    watchdogThread = std::jthread([this](std::stop_token stop) {
+        watchdog(stop);
+    });
 }
 
 void Registry::watchdog(std::stop_token stop)
@@ -150,15 +154,17 @@ void Registry::watchdog(std::stop_token stop)
                     }
 
                     if (event->mask & IN_CREATE){
-                        std::lock_guard<std::mutex> lock(mutex);
                         Logger::logger().log_registry()->debug("USB Device connected: {}", name);
                         
                         std::this_thread::sleep_for(std::chrono::milliseconds(500)); // Wait for kernel init
-                        
+
                         std::string port = "/dev/" + name;
-                        Identification identity = getIdentification(port);   
-                        Instrument tempDevice = {.idn=identity.idn, .port=port, .baudrate=identity.baudrate, .available=true};
-                        devices[port] = tempDevice;
+                        Identification identity = getIdentification(port);
+                        {
+                            std::lock_guard<std::mutex> lock(mutex);
+                            Instrument tempDevice = {.idn=identity.idn, .port=port, .baudrate=identity.baudrate, .available=true};
+                            devices[port] = tempDevice;
+                        }
                     }
                     if (event->mask & IN_DELETE){
                         std::lock_guard<std::mutex> lock(mutex);
@@ -190,10 +196,12 @@ std::unordered_map<std::string, Registry::Instrument> Registry::readDevices()
 
 void Registry::setToAvailable(std::string& port)
 {
+    std::lock_guard<std::mutex> lock(mutex);
     devices[port] = Instrument({.idn=devices[port].idn, .port=port, .baudrate=devices[port].baudrate, .available=true});
 }
 
 void Registry::setToUnavailable(std::string& port)
 {
+    std::lock_guard<std::mutex> lock(mutex);
     devices[port] = Instrument({.idn=devices[port].idn, .port=port, .baudrate=devices[port].baudrate, .available=false});
 }

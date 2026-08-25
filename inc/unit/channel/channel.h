@@ -41,7 +41,9 @@ public:
 
         int currentStep;
         int loopCount;
-    } data;
+
+        nlohmann::json toJson() const;
+    };
 
     // -------- Control commands -------- 
     void enqueueCommand(const std::string& command);
@@ -51,8 +53,8 @@ public:
     void deleteExperiment();
 
     // -------- Logging --------
-    std::string returnDevices();
-    Data getLatestData();
+    std::string returnDevices() const;
+    Data getLatestData() const;
 
     //  -------- Thread Functions --------
     void startWorkerThread();
@@ -142,5 +144,5 @@ private:
     void waitForControl(std::stop_token& stop);
 
     // -------- Helper Functions --------
-    std::string stateToString(State state);
+    std::string stateToString(State state) const;
 };

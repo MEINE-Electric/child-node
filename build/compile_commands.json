@@ -1,67 +1,67 @@
 [
 {
   "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
-  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -std=gnu++20 -o CMakeFiles/app.dir/src/main.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/main.cpp",
+  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/main.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/main.cpp",
   "file": "/home/nakshatra/Projects/cycler_app/child_node/src/main.cpp",
   "output": "CMakeFiles/app.dir/src/main.cpp.o"
 },
 {
   "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
-  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -std=gnu++20 -o CMakeFiles/app.dir/src/helper/logger/logger.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/helper/logger/logger.cpp",
+  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/helper/logger/logger.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/helper/logger/logger.cpp",
   "file": "/home/nakshatra/Projects/cycler_app/child_node/src/helper/logger/logger.cpp",
   "output": "CMakeFiles/app.dir/src/helper/logger/logger.cpp.o"
 },
 {
   "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
-  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -std=gnu++20 -o CMakeFiles/app.dir/src/mqtt/mqtt.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/mqtt/mqtt.cpp",
+  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/mqtt/mqtt.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/mqtt/mqtt.cpp",
   "file": "/home/nakshatra/Projects/cycler_app/child_node/src/mqtt/mqtt.cpp",
   "output": "CMakeFiles/app.dir/src/mqtt/mqtt.cpp.o"
 },
 {
   "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
-  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -std=gnu++20 -o CMakeFiles/app.dir/src/drivers/serial.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/drivers/serial.cpp",
+  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/drivers/serial.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/drivers/serial.cpp",
   "file": "/home/nakshatra/Projects/cycler_app/child_node/src/drivers/serial.cpp",
   "output": "CMakeFiles/app.dir/src/drivers/serial.cpp.o"
 },
 {
   "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
-  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -std=gnu++20 -o CMakeFiles/app.dir/src/drivers/supply.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/drivers/supply.cpp",
+  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/drivers/supply.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/drivers/supply.cpp",
   "file": "/home/nakshatra/Projects/cycler_app/child_node/src/drivers/supply.cpp",
   "output": "CMakeFiles/app.dir/src/drivers/supply.cpp.o"
 },
 {
   "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
-  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -std=gnu++20 -o CMakeFiles/app.dir/src/drivers/load.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/drivers/load.cpp",
+  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/drivers/load.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/drivers/load.cpp",
   "file": "/home/nakshatra/Projects/cycler_app/child_node/src/drivers/load.cpp",
   "output": "CMakeFiles/app.dir/src/drivers/load.cpp.o"
 },
 {
   "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
-  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -std=gnu++20 -o CMakeFiles/app.dir/src/drivers/module.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/drivers/module.cpp",
+  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/drivers/module.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/drivers/module.cpp",
   "file": "/home/nakshatra/Projects/cycler_app/child_node/src/drivers/module.cpp",
   "output": "CMakeFiles/app.dir/src/drivers/module.cpp.o"
 },
 {
   "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
-  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -std=gnu++20 -o CMakeFiles/app.dir/src/registry/registry.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/registry/registry.cpp",
+  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/registry/registry.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/registry/registry.cpp",
   "file": "/home/nakshatra/Projects/cycler_app/child_node/src/registry/registry.cpp",
   "output": "CMakeFiles/app.dir/src/registry/registry.cpp.o"
 },
 {
   "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
-  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -std=gnu++20 -o CMakeFiles/app.dir/src/unit/channel/channel.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/unit/channel/channel.cpp",
+  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/unit/channel/channel.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/unit/channel/channel.cpp",
   "file": "/home/nakshatra/Projects/cycler_app/child_node/src/unit/channel/channel.cpp",
   "output": "CMakeFiles/app.dir/src/unit/channel/channel.cpp.o"
 },
 {
   "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
-  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -std=gnu++20 -o CMakeFiles/app.dir/src/unit/configuration/configuration.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/unit/configuration/configuration.cpp",
+  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/unit/configuration/configuration.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/unit/configuration/configuration.cpp",
   "file": "/home/nakshatra/Projects/cycler_app/child_node/src/unit/configuration/configuration.cpp",
   "output": "CMakeFiles/app.dir/src/unit/configuration/configuration.cpp.o"
 },
 {
   "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
-  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -std=gnu++20 -o CMakeFiles/app.dir/src/helper/helper.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/helper/helper.cpp",
+  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/helper/helper.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/helper/helper.cpp",
   "file": "/home/nakshatra/Projects/cycler_app/child_node/src/helper/helper.cpp",
   "output": "CMakeFiles/app.dir/src/helper/helper.cpp.o"
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <mutex>
 #include <string>
 #include <thread>
 #include <unordered_map>
@@ -18,7 +19,8 @@ public:
 
     void startEventWatchdog();
     void stopEventWatchdog();
-    void publishFeedback(const std::string& section, const std::string& message);
+    void startTelemetryThread();
+    void stopTelemetryThread();
 private:
     std::string nodeID;
     MQTT& mqtt;
@@ -29,9 +31,12 @@ private:
     std::unordered_map<std::string, Module> moduleList;
 
     std::jthread eventWatchdog;
+    std::jthread telemetryThread;
+    std::mutex channelListMutex;
 
     void checkForEvents();
     void handleConfig(const std::string& message);
     void handleExperiment(const std::string& message);
     void handleControl(const std::string& message);
+    void publishFeedback(const std::string& section, const std::string& message);
 };
