@@ -12,6 +12,7 @@ app: \
   CMakeFiles/app.dir/src/registry/registry.cpp.o \
   CMakeFiles/app.dir/src/unit/channel/channel.cpp.o \
   CMakeFiles/app.dir/src/unit/configuration/configuration.cpp.o \
+  CMakeFiles/app.dir/src/event/event.cpp.o \
   CMakeFiles/app.dir/src/helper/helper.cpp.o \
   /usr/lib/libspdlog.so.1.17.0 \
   /usr/lib/libpaho-mqttpp3.so.1.6.0 \
@@ -92,6 +93,8 @@ CMakeFiles/app.dir/src/registry/registry.cpp.o:
 CMakeFiles/app.dir/src/unit/channel/channel.cpp.o:
 
 CMakeFiles/app.dir/src/unit/configuration/configuration.cpp.o:
+
+CMakeFiles/app.dir/src/event/event.cpp.o:
 
 CMakeFiles/app.dir/src/helper/helper.cpp.o:
 

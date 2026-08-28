@@ -150,8 +150,36 @@ CMakeFiles/app.dir/src/main.cpp.o: \
  /usr/include/c++/16.1.1/bits/stdexcept_except.h \
  /usr/include/c++/16.1.1/system_error \
  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/error_constants.h \
- /usr/include/c++/16.1.1/iostream /usr/include/c++/16.1.1/ostream \
- /usr/include/c++/16.1.1/bits/ostream.h /usr/include/c++/16.1.1/ios \
+ /usr/include/nlohmann/json.hpp /usr/include/c++/16.1.1/algorithm \
+ /usr/include/c++/16.1.1/bits/stl_algo.h \
+ /usr/include/c++/16.1.1/bits/algorithmfwd.h \
+ /usr/include/c++/16.1.1/bits/stl_heap.h \
+ /usr/include/c++/16.1.1/bits/uniform_int_dist.h \
+ /usr/include/c++/16.1.1/bits/stl_tempbuf.h \
+ /usr/include/c++/16.1.1/bits/ranges_algo.h \
+ /usr/include/c++/16.1.1/bits/ranges_algobase.h \
+ /usr/include/c++/16.1.1/pstl/glue_algorithm_defs.h \
+ /usr/include/c++/16.1.1/pstl/execution_defs.h \
+ /usr/include/c++/16.1.1/functional \
+ /usr/include/c++/16.1.1/bits/refwrap.h \
+ /usr/include/c++/16.1.1/bits/std_function.h \
+ /usr/include/c++/16.1.1/bits/functexcept.h \
+ /usr/include/c++/16.1.1/unordered_map \
+ /usr/include/c++/16.1.1/bits/unordered_map.h \
+ /usr/include/c++/16.1.1/bits/hashtable.h \
+ /usr/include/c++/16.1.1/bits/hashtable_policy.h \
+ /usr/include/c++/16.1.1/ext/aligned_buffer.h \
+ /usr/include/c++/16.1.1/bits/enable_special_members.h \
+ /usr/include/c++/16.1.1/bits/node_handle.h \
+ /usr/include/c++/16.1.1/vector \
+ /usr/include/c++/16.1.1/bits/stl_uninitialized.h \
+ /usr/include/c++/16.1.1/bits/stl_vector.h \
+ /usr/include/c++/16.1.1/bits/stl_bvector.h \
+ /usr/include/c++/16.1.1/bits/vector.tcc /usr/include/c++/16.1.1/array \
+ /usr/include/c++/16.1.1/bits/binders.h /usr/include/c++/16.1.1/iterator \
+ /usr/include/c++/16.1.1/bits/stream_iterator.h \
+ /usr/include/c++/16.1.1/bits/streambuf_iterator.h \
+ /usr/include/c++/16.1.1/streambuf \
  /usr/include/c++/16.1.1/bits/ios_base.h \
  /usr/include/c++/16.1.1/ext/atomicity.h \
  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/gthr.h \
@@ -171,53 +199,21 @@ CMakeFiles/app.dir/src/main.cpp.o: \
  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
  /usr/include/sys/single_threaded.h \
  /usr/include/c++/16.1.1/bits/locale_classes.h \
- /usr/include/c++/16.1.1/bits/functexcept.h \
  /usr/include/c++/16.1.1/bits/locale_classes.tcc \
- /usr/include/c++/16.1.1/streambuf \
  /usr/include/c++/16.1.1/bits/streambuf.tcc \
+ /usr/include/c++/16.1.1/memory \
+ /usr/include/c++/16.1.1/bits/stl_raw_storage_iter.h \
+ /usr/include/c++/16.1.1/bits/align.h \
+ /usr/include/c++/16.1.1/bits/unique_ptr.h \
+ /usr/include/c++/16.1.1/bits/ostream.h /usr/include/c++/16.1.1/ios \
  /usr/include/c++/16.1.1/bits/basic_ios.h \
  /usr/include/c++/16.1.1/bits/locale_facets.h \
  /usr/include/c++/16.1.1/cwctype /usr/include/wctype.h \
  /usr/include/bits/wctype-wchar.h \
  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/ctype_base.h \
- /usr/include/c++/16.1.1/bits/streambuf_iterator.h \
  /usr/include/c++/16.1.1/x86_64-pc-linux-gnu/bits/ctype_inline.h \
  /usr/include/c++/16.1.1/bits/locale_facets.tcc \
  /usr/include/c++/16.1.1/bits/basic_ios.tcc \
- /usr/include/c++/16.1.1/bits/ostream_print.h \
- /usr/include/c++/16.1.1/bits/ostream.tcc /usr/include/c++/16.1.1/istream \
- /usr/include/c++/16.1.1/bits/istream.tcc /usr/include/nlohmann/json.hpp \
- /usr/include/c++/16.1.1/algorithm \
- /usr/include/c++/16.1.1/bits/stl_algo.h \
- /usr/include/c++/16.1.1/bits/algorithmfwd.h \
- /usr/include/c++/16.1.1/bits/stl_heap.h \
- /usr/include/c++/16.1.1/bits/uniform_int_dist.h \
- /usr/include/c++/16.1.1/bits/stl_tempbuf.h \
- /usr/include/c++/16.1.1/bits/ranges_algo.h \
- /usr/include/c++/16.1.1/bits/ranges_algobase.h \
- /usr/include/c++/16.1.1/pstl/glue_algorithm_defs.h \
- /usr/include/c++/16.1.1/pstl/execution_defs.h \
- /usr/include/c++/16.1.1/functional \
- /usr/include/c++/16.1.1/bits/refwrap.h \
- /usr/include/c++/16.1.1/bits/std_function.h \
- /usr/include/c++/16.1.1/unordered_map \
- /usr/include/c++/16.1.1/bits/unordered_map.h \
- /usr/include/c++/16.1.1/bits/hashtable.h \
- /usr/include/c++/16.1.1/bits/hashtable_policy.h \
- /usr/include/c++/16.1.1/ext/aligned_buffer.h \
- /usr/include/c++/16.1.1/bits/enable_special_members.h \
- /usr/include/c++/16.1.1/bits/node_handle.h \
- /usr/include/c++/16.1.1/vector \
- /usr/include/c++/16.1.1/bits/stl_uninitialized.h \
- /usr/include/c++/16.1.1/bits/stl_vector.h \
- /usr/include/c++/16.1.1/bits/stl_bvector.h \
- /usr/include/c++/16.1.1/bits/vector.tcc /usr/include/c++/16.1.1/array \
- /usr/include/c++/16.1.1/bits/binders.h /usr/include/c++/16.1.1/iterator \
- /usr/include/c++/16.1.1/bits/stream_iterator.h \
- /usr/include/c++/16.1.1/memory \
- /usr/include/c++/16.1.1/bits/stl_raw_storage_iter.h \
- /usr/include/c++/16.1.1/bits/align.h \
- /usr/include/c++/16.1.1/bits/unique_ptr.h \
  /usr/include/c++/16.1.1/bits/shared_ptr.h \
  /usr/include/c++/16.1.1/bits/shared_ptr_base.h \
  /usr/include/c++/16.1.1/bits/allocated_ptr.h \
@@ -282,8 +278,13 @@ CMakeFiles/app.dir/src/main.cpp.o: \
  /usr/include/c++/16.1.1/bits/locale_conv.h \
  /usr/include/c++/16.1.1/iomanip \
  /usr/include/c++/16.1.1/bits/quoted_string.h \
- /usr/include/c++/16.1.1/sstream /usr/include/c++/16.1.1/bits/sstream.tcc \
- /usr/include/c++/16.1.1/codecvt /usr/include/c++/16.1.1/bits/fs_dir.h \
+ /usr/include/c++/16.1.1/sstream /usr/include/c++/16.1.1/istream \
+ /usr/include/c++/16.1.1/ostream \
+ /usr/include/c++/16.1.1/bits/ostream_print.h \
+ /usr/include/c++/16.1.1/bits/ostream.tcc \
+ /usr/include/c++/16.1.1/bits/istream.tcc \
+ /usr/include/c++/16.1.1/bits/sstream.tcc /usr/include/c++/16.1.1/codecvt \
+ /usr/include/c++/16.1.1/bits/fs_dir.h \
  /usr/include/c++/16.1.1/bits/fs_ops.h \
  /usr/include/nlohmann/detail/conversions/to_json.hpp \
  /usr/include/c++/16.1.1/optional \
@@ -315,22 +316,7 @@ CMakeFiles/app.dir/src/main.cpp.o: \
  /usr/include/nlohmann/ordered_map.hpp /usr/include/c++/16.1.1/any \
  /usr/include/nlohmann/detail/macro_unscope.hpp \
  /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
- /home/nakshatra/Projects/cycler_app/child_node/inc/helper/logger/logger.h \
- /usr/include/spdlog/logger.h /usr/include/spdlog/common.h \
- /usr/include/spdlog/details/null_mutex.h /usr/include/c++/16.1.1/atomic \
- /usr/include/spdlog/tweakme.h /usr/include/c++/16.1.1/chrono \
- /usr/include/c++/16.1.1/bits/chrono_io.h /usr/include/c++/16.1.1/format \
- /usr/include/c++/16.1.1/charconv \
- /usr/include/c++/16.1.1/bits/monostate.h \
- /usr/include/c++/16.1.1/bits/formatfwd.h \
- /usr/include/c++/16.1.1/bits/unicode.h \
- /usr/include/c++/16.1.1/bits/unicode-data.h \
- /usr/include/spdlog/fmt/fmt.h /usr/include/spdlog/details/backtracer.h \
- /usr/include/spdlog/details/circular_q.h \
- /usr/include/spdlog/details/log_msg_buffer.h \
- /usr/include/spdlog/details/log_msg.h /usr/include/c++/16.1.1/mutex \
- /usr/include/c++/16.1.1/bits/std_mutex.h \
- /usr/include/c++/16.1.1/bits/unique_lock.h \
+ /usr/include/c++/16.1.1/iostream \
  /home/nakshatra/Projects/cycler_app/child_node/inc/mqtt/mqtt.h \
  /usr/include/mqtt/async_client.h /usr/include/c++/16.1.1/list \
  /usr/include/c++/16.1.1/bits/stl_list.h \
@@ -340,18 +326,26 @@ CMakeFiles/app.dir/src/main.cpp.o: \
  /usr/include/MQTTClientPersistence.h /usr/include/mqtt/callback.h \
  /usr/include/mqtt/delivery_token.h /usr/include/mqtt/message.h \
  /usr/include/mqtt/buffer_ref.h /usr/include/mqtt/types.h \
+ /usr/include/c++/16.1.1/chrono /usr/include/c++/16.1.1/bits/chrono_io.h \
+ /usr/include/c++/16.1.1/format /usr/include/c++/16.1.1/charconv \
+ /usr/include/c++/16.1.1/bits/monostate.h \
+ /usr/include/c++/16.1.1/bits/formatfwd.h \
+ /usr/include/c++/16.1.1/bits/unicode.h \
+ /usr/include/c++/16.1.1/bits/unicode-data.h \
  /usr/include/mqtt/reason_code.h /usr/include/mqtt/exception.h \
  /usr/include/mqtt/platform.h /usr/include/mqtt/export.h \
  /usr/include/mqtt/properties.h /usr/include/MQTTProperties.h \
  /usr/include/mqtt/token.h /usr/include/c++/16.1.1/condition_variable \
- /usr/include/c++/16.1.1/stop_token \
+ /usr/include/c++/16.1.1/bits/std_mutex.h \
+ /usr/include/c++/16.1.1/bits/unique_lock.h \
+ /usr/include/c++/16.1.1/stop_token /usr/include/c++/16.1.1/atomic \
  /usr/include/c++/16.1.1/bits/std_thread.h \
  /usr/include/c++/16.1.1/semaphore \
  /usr/include/c++/16.1.1/bits/semaphore_base.h \
  /usr/include/c++/16.1.1/bits/atomic_timed_wait.h \
  /usr/include/c++/16.1.1/bits/this_thread_sleep.h /usr/include/sys/time.h \
- /usr/include/c++/16.1.1/thread /usr/include/mqtt/iaction_listener.h \
- /usr/include/mqtt/server_response.h \
+ /usr/include/c++/16.1.1/mutex /usr/include/c++/16.1.1/thread \
+ /usr/include/mqtt/iaction_listener.h /usr/include/mqtt/server_response.h \
  /usr/include/mqtt/string_collection.h /usr/include/mqtt/create_options.h \
  /usr/include/c++/16.1.1/variant /usr/include/mqtt/iclient_persistence.h \
  /usr/include/mqtt/buffer_view.h /usr/include/mqtt/event.h \
@@ -363,6 +357,13 @@ CMakeFiles/app.dir/src/main.cpp.o: \
  /usr/include/c++/16.1.1/bits/stl_deque.h \
  /usr/include/c++/16.1.1/bits/deque.tcc /usr/include/c++/16.1.1/queue \
  /usr/include/c++/16.1.1/bits/stl_queue.h \
+ /home/nakshatra/Projects/cycler_app/child_node/inc/helper/logger/logger.h \
+ /usr/include/spdlog/logger.h /usr/include/spdlog/common.h \
+ /usr/include/spdlog/details/null_mutex.h /usr/include/spdlog/tweakme.h \
+ /usr/include/spdlog/fmt/fmt.h /usr/include/spdlog/details/backtracer.h \
+ /usr/include/spdlog/details/circular_q.h \
+ /usr/include/spdlog/details/log_msg_buffer.h \
+ /usr/include/spdlog/details/log_msg.h \
  /home/nakshatra/Projects/cycler_app/child_node/inc/registry/registry.h \
  /usr/include/termios.h /usr/include/bits/termios.h \
  /usr/include/bits/termios-struct.h /usr/include/bits/termios-c_cc.h \
@@ -386,4 +387,5 @@ CMakeFiles/app.dir/src/main.cpp.o: \
  /home/nakshatra/Projects/cycler_app/child_node/inc/drivers/supply.h \
  /home/nakshatra/Projects/cycler_app/child_node/inc/drivers/module.h \
  /home/nakshatra/Projects/cycler_app/child_node/inc/unit/channel/channel.h \
- /home/nakshatra/Projects/cycler_app/child_node/inc/helper/helper.h
+ /home/nakshatra/Projects/cycler_app/child_node/inc/helper/helper.h \
+ /home/nakshatra/Projects/cycler_app/child_node/inc/event/event.h

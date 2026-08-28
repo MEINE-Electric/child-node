@@ -83,7 +83,7 @@ std::string Module::query(const std::string& command)
 
     Logger::logger().log_module()->error("Failed to query command \"{}\" from Module-{} after {} attempts", command, alias, maxRetries);
 
-    return "";
+    throw std::runtime_error("Failed to read response for command \"" + command + "\" from Module-" + alias);
 }
 
 bool Module::write(const std::string& command)
@@ -103,7 +103,7 @@ bool Module::write(const std::string& command)
 
     Logger::logger().log_module()->error("Failed to write command \"{}\" to Module-{} after {} attempts", command, alias, maxRetries );
 
-    return false;
+    throw std::runtime_error("Failed to write command \"" + command + "\" to Module-" + alias);
 }
 
 bool Module::setToCharge()

@@ -22,6 +22,7 @@ set(SOURCES
     src/registry/registry.cpp
     src/unit/channel/channel.cpp
     src/unit/configuration/configuration.cpp
+    src/event/event.cpp
     src/helper/helper.cpp
 )
 

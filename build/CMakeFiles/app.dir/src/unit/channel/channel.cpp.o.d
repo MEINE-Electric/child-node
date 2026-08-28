@@ -363,4 +363,5 @@ CMakeFiles/app.dir/src/unit/channel/channel.cpp.o: \
  /usr/include/nlohmann/detail/conversions/to_chars.hpp \
  /usr/include/nlohmann/ordered_map.hpp /usr/include/c++/16.1.1/any \
  /usr/include/nlohmann/detail/macro_unscope.hpp \
- /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
+ /usr/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+ /home/nakshatra/Projects/cycler_app/child_node/inc/event/event.h

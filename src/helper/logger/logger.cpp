@@ -23,8 +23,8 @@ void Logger::init()
     auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
     auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("logs/app.log", 5 * 1024 * 1024, 5, false);
 
-    console_sink->set_level(spdlog::level::debug);
-    file_sink->set_level(spdlog::level::debug);
+    console_sink->set_level(spdlog::level::info);
+    file_sink->set_level(spdlog::level::info);
 
     std::vector<spdlog::sink_ptr> sinks {
         console_sink,
@@ -41,15 +41,15 @@ void Logger::init()
     load = register_logger("LOAD    ", sinks);
     module = register_logger("MODULE  ", sinks);
 
-    channel->set_level(spdlog::level::debug);
-    unit->set_level(spdlog::level::debug);
-    json->set_level(spdlog::level::debug);
-    mqtt->set_level(spdlog::level::debug);
-    serial->set_level(spdlog::level::debug);
-    registry->set_level(spdlog::level::debug);
-    supply->set_level(spdlog::level::debug);
-    load->set_level(spdlog::level::debug);
-    module->set_level(spdlog::level::debug);
+    channel->set_level(spdlog::level::info);
+    unit->set_level(spdlog::level::info);
+    json->set_level(spdlog::level::info);
+    mqtt->set_level(spdlog::level::info);
+    serial->set_level(spdlog::level::info);
+    registry->set_level(spdlog::level::info);
+    supply->set_level(spdlog::level::info);
+    load->set_level(spdlog::level::info);
+    module->set_level(spdlog::level::info);
 
     channel->set_pattern("%T | %^%n%$ [%^%l%$] %v");
     unit->set_pattern("%T | %^%n%$ [%^%l%$] %v");

@@ -144,10 +144,16 @@ ssize_t Serial::write(const std::string &message)
     while (total < static_cast<ssize_t>(message.size())) //message.size() returns size_t not ssize_t
     {
         ssize_t bytes = ::write(fd, message.c_str()+total, message.size()-total);
-
+        
         if (bytes <= 0)
         {
-            Logger::logger().log_serial()->error("Failed to write \"{}\" to {}: {}",message, port, bytes == 0 ? "No bytes written" : strerror(errno));
+            std::string logMessage = message;
+
+            if (!logMessage.empty() && logMessage.back() == '\n')
+                logMessage.pop_back();
+
+            Logger::logger().log_serial()->error("Failed to write \"{}\" to {}: {}", logMessage, port, bytes == 0 ? "No bytes written" : strerror(errno));
+
             return -1;
         }
         

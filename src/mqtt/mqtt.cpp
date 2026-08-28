@@ -1,5 +1,8 @@
+#include <mqtt/exception.h>
 #include <mqtt/message.h>
 #include <nlohmann/json.hpp>
+#include <stop_token>
+#include <thread>
 
 #include "mqtt/mqtt.h"
 #include "helper/logger/logger.h"
@@ -21,35 +24,29 @@ MQTT::~MQTT()
 
 bool MQTT::connect()
 {
-    connectionThread = std::jthread([this](std::stop_token stop)
+    if (connected)
+        return true;
+
+    while (true)
     {
-        while (!stop.stop_requested())
+        try
         {
-            if (!connected)
-            {
-                try
-                {
-                    // actual Paho connect
-                    client.connect(connOpts)->wait();
+            client.connect(connOpts)->wait();
+            connected = true;
+            Logger::logger().log_mqtt()->info("Connected to {}",broker);
 
-                    connected = true;
-                    Logger::logger().log_mqtt()->info("Connected");
-                }
-                catch (const std::exception& e)
-                {
-                    connected = false;
-
-                    Logger::logger().log_mqtt()->error(
-                        "Connection failed: {}", e.what());
-
-                    std::this_thread::sleep_for(
-                        std::chrono::seconds(5));
-                }
-            }
-
-            // monitor / wait for disconnect
+            return true;
         }
-    });
+        catch (const mqtt::exception& e)
+        {
+            connected = false;
+            Logger::logger().log_mqtt()->error("Connection failed: {}",e.what());
+
+            std::this_thread::sleep_for(
+                std::chrono::seconds(5)
+            );
+        }
+    }
 }
 
 void MQTT::disconnect()
@@ -164,10 +161,12 @@ void MQTT::message_arrived(mqtt::const_message_ptr msg)
     eventCV.notify_one();
 }
 
-std::optional<std::pair<std::string, std::string>> MQTT::waitForEvent()
+
+std::optional<std::pair<std::string, std::string>> MQTT::waitForMQTTEvent()
 {
     std::unique_lock lock(eventMutex);
 
+    // Wait is used and not blocking in order to allow the thread to be stopped when queue is empty
     if (!eventCV.wait_for(lock, std::chrono::milliseconds(100), [this]()
     {
         return !eventQueue.empty();

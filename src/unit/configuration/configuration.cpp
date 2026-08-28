@@ -1,15 +1,17 @@
-#include <shared_mutex>
 #include <string>
 #include <exception>
 #include <unordered_set>
+#include <iostream>
 
 #include "mqtt/mqtt.h"
 #include "helper/helper.h"
 #include "helper/logger/logger.h"
+#include "registry/registry.h"
 #include "unit/configuration/configuration.h"
+#include "event/event.h"
 
-UnitConfiguration::UnitConfiguration(std::string nodeID, MQTT& mqtt)
-: nodeID(nodeID), mqtt(mqtt)
+UnitConfiguration::UnitConfiguration(std::string nodeID, MQTT& mqtt, Registry& registry)
+: nodeID(nodeID), mqtt(mqtt), registry(registry)
 {
 }
 
@@ -97,31 +99,53 @@ void UnitConfiguration::stopTelemetryThread()
     }  
 }
 
+bool UnitConfiguration::waitForConfiguration()
+{
+    std::unique_lock<std::mutex> lock(mutex);
+
+    cv.wait(lock, [this]
+    {
+        return configured;
+    });
+
+    return true;
+}
+
 void UnitConfiguration::publishFeedback(const std::string& section, const std::string& message)
 {
     mqtt.publish(fmt::format("{}/{}/feedback", section, nodeID), message);
 }
 
 void UnitConfiguration::checkForEvents()
-{
-    const auto newEvent = mqtt.waitForEvent();
+{   
+    // Capture events from MQTT
+    const auto newMQTTEvent = mqtt.waitForMQTTEvent();
+    const auto newChannelEvent = eventBus.waitForChannelEvent();
 
-    if(!newEvent)
+    if(!newMQTTEvent && !newChannelEvent)
     {
         return;
     }
 
-    if (newEvent->first == "config")
+    if(newMQTTEvent)
     {
-        handleConfig(newEvent->second);
+        if (newMQTTEvent->first == "config")
+        {
+            handleConfig(newMQTTEvent->second);
+        }
+        else if (newMQTTEvent->first == "experiment")
+        {
+            handleExperiment(newMQTTEvent->second);
+        }
+        else if (newMQTTEvent->first == "control")
+        {
+            handleControl(newMQTTEvent->second);
+        }
     }
-    else if (newEvent->first == "experiment")
+    
+    if(newChannelEvent)
     {
-        handleExperiment(newEvent->second);
-    }
-    else if (newEvent->first == "control")
-    {
-        handleControl(newEvent->second);
+        std::cout << nodeID << " - " << newChannelEvent->type << ": " << newChannelEvent->message << "\n";
     }
 }
 
@@ -248,8 +272,9 @@ void UnitConfiguration::handleConfig(const std::string& message)
                 newLoadList.at(config.loadPort),
                 newSupplyList.at(config.supplyPort),
                 newModuleList.at(config.modulePort),
-                config.loadChannel,
-                channelID
+                config.loadChannel, // ChannelID is node_id+cycler_id --> 11, 12, 13.....
+                channelID,
+                &eventBus
             );
         }
     }
@@ -278,6 +303,13 @@ void UnitConfiguration::handleConfig(const std::string& message)
 
     Logger::logger().log_unit()->info("Configuration successfully replaced");
     publishFeedback("config", "CONFIG_OK: configuration successfully replaced");
+
+    {
+        std::lock_guard<std::mutex> lock(mutex);
+        configured = true;
+    }
+
+    cv.notify_one();
 }
 
 void UnitConfiguration::handleExperiment(const std::string& message)

@@ -29,7 +29,7 @@ std::optional<std::pair<std::string, std::vector<Command>>> parseJSONToCommand(c
                 commands.emplace_back(
                     Charge{
                         i.at("voltage").get<float>(),
-                        i.at("cutoff").get<float>(),
+                        i.at("current").get<float>(),
                         i.at("cutoffVoltage").get<float>(),
                         i.at("duration").get<int>()
                     }
@@ -39,7 +39,7 @@ std::optional<std::pair<std::string, std::vector<Command>>> parseJSONToCommand(c
             {
                 commands.emplace_back(
                     Discharge{
-                        i.at("cutoff").get<float>(),
+                        i.at("current").get<float>(),
                         i.at("cutoffVoltage").get<float>(),
                         i.at("duration").get<int>()
                     }

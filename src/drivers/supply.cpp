@@ -5,6 +5,7 @@
 #include <fmt/format.h>
 #include <sstream>
 #include <cmath>
+#include <string>
 
 Supply::Supply(const std::string &port, const speed_t &baudrate, const std::string &idn, const std::string alias)
 :idn(idn), alias(alias), serial(port, baudrate){}
@@ -52,30 +53,27 @@ bool Supply::disconnect()
 
 std::string Supply::query(const std::string& command)
 {
-    constexpr int maxRetries = 1;
+    constexpr int maxRetries = 3;
+
+    write(command);
 
     for (int attempt = 1; attempt <= maxRetries; ++attempt)
     {
-        if (!write(command))
-        {
-            Logger::logger().log_supply()->warn("Query write attempt {}/{} failed for \"{}\" to Supply-{}", attempt, maxRetries, command, alias);
-            continue;
-        }
-
         std::string response = serial.readLine();
 
         if (!response.empty())
         {
-            Logger::logger().log_supply()->debug("{} queried from Supply-{} -> {}",command,alias,response);
+            Logger::logger().log_supply()->debug("{} queried from Supply-{} -> {}", command, alias, response);
             return response;
         }
 
-        Logger::logger().log_supply()->warn("Query read attempt {}/{} failed for \"{}\" to Supply-{}", attempt, maxRetries, command, alias);
+        Logger::logger().log_supply()->warn("Query read attempt {}/{} failed for \"{}\" from Supply-{}", attempt, maxRetries, command, alias);
     }
 
     Logger::logger().log_supply()->error("Failed to query command \"{}\" from Supply-{} after {} attempts", command, alias, maxRetries);
 
-    return "";
+    throw std::runtime_error("Failed to read response for command \"" + command + "\" from Supply-" + alias
+    );
 }
 
 bool Supply::write(const std::string& command)
@@ -95,6 +93,7 @@ bool Supply::write(const std::string& command)
 
     Logger::logger().log_supply()->error("Failed to write command \"{}\" to Supply-{} after {} attempts", command, alias, maxRetries );
 
+    throw std::runtime_error("Failed to write command \"" + command + "\" to Supply-" + alias);
     return false;
 }
 

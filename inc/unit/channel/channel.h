@@ -12,12 +12,13 @@
 #include "drivers/supply.h"
 #include "drivers/module.h"
 #include "helper/helper.h"
+#include "event/event.h"
 
 class Channel
 {
 public:
     // -------- Constructor & Deconstructor -------- 
-    Channel(Load& load, Supply& supply, Module& module, int channel, std::string channelID);
+    Channel(Load& load, Supply& supply, Module& module, int channel, std::string channelID, ChannelEventBus* eventBus = nullptr);
     ~Channel();
 
     // -------- Helper Structs -------- 
@@ -70,6 +71,7 @@ private:
     Load& load;
     Supply& supply;
     Module& module;
+    ChannelEventBus* eventBus;
     int loadChannel;
 
     std::vector<Command> experiment;
@@ -144,5 +146,7 @@ private:
     void waitForControl(std::stop_token& stop);
 
     // -------- Helper Functions --------
+    void connectAllDevices();
+    void disconnectAllDevices();
     std::string stateToString(State state) const;
 };

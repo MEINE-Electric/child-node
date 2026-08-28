@@ -89,7 +89,8 @@ void Registry::startWatchdog()
     if (watchdogThread.joinable())
         return;
 
-    watchdogThread = std::jthread([this](std::stop_token stop) {
+    watchdogThread = std::jthread([this](std::stop_token stop) 
+    {
         watchdog(stop);
     });
 }

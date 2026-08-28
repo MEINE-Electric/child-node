@@ -1,4 +1,5 @@
 #include <chrono>
+#include <exception>
 #include <stop_token>
 #include <thread>
 
@@ -7,10 +8,12 @@
 #include "drivers/module.h"
 #include "helper/logger/logger.h"
 #include "unit/channel/channel.h"
+#include "event/event.h"
 
-Channel::Channel(Load& load, Supply& supply, Module& module, int channel, std::string channelID)
-: load(load), supply(supply), module(module), loadChannel(channel), channelID(channelID)
+Channel::Channel(Load& load, Supply& supply, Module& module, int channel, std::string channelID, ChannelEventBus* eventBus)
+: load(load), supply(supply), module(module), loadChannel(channel), channelID(channelID), eventBus(eventBus)
 {
+
 }
 
 Channel::~Channel()
@@ -87,6 +90,15 @@ void Channel::enqueueCommand(const std::string& command)
 
 void Channel::startWorkerThread()
 {
+    try
+    {
+        connectAllDevices();
+    }
+    catch (const std::exception& e)
+    {
+        return;
+    }
+
     if (workerThread.joinable())
     {
         Logger::logger().log_channel()->warn("Channel-{} worker thread is already running",channelID);
@@ -107,6 +119,15 @@ void Channel::stopWorkerThread()
         workerThread.join();
         Logger::logger().log_channel()->info("Channel-{} worker thread stopped",channelID);
     }
+
+    try
+    {
+        disconnectAllDevices();
+    }
+    catch (const std::exception& e)
+    {
+        return;
+    }
 }
 
 // Private Functions
@@ -114,8 +135,14 @@ void Channel::run(std::stop_token stop)
 {
     while (!stop.stop_requested())
     {
+        if(runtime.state == State::Error)
+        {
+            running = false;
+        }
+
         // Control command check
         checkControlQueue();
+
         if (!running)
         {
             waitForControl(stop);
@@ -130,7 +157,7 @@ void Channel::run(std::stop_token stop)
         }
         
         // Condition check block
-        if(running && runtime.state == State::Idle)
+        if(running && (runtime.state == State::Idle || runtime.state == State::Finished))
         {
             std::visit([this](const auto& cmd)
             {
@@ -141,33 +168,36 @@ void Channel::run(std::stop_token stop)
         {
             if(runtime.timeElapsed >= runtime.totalDuration)
             {
-                Logger::logger().log_channel()->debug(
+                Logger::logger().log_channel()->info(
                     "Channel {} ending step {}: duration limit reached ({} / {} s)",
                     channelID, runtime.currentStep, runtime.timeElapsed, runtime.totalDuration);
                 nextStep();
             }
             else if (runtime.state == State::Charging && runtime.thresholdVoltage <= runtime.supplyVoltage)
             {
-                Logger::logger().log_channel()->debug(
+                Logger::logger().log_channel()->info(
                     "Channel {} ending charge step: supply voltage {:.3f} V reached cutoff {:.3f} V",
                     channelID, runtime.supplyVoltage, runtime.thresholdVoltage);
                 nextStep();
             }
             else if(runtime.state == State::Discharging && runtime.thresholdVoltage >= runtime.loadVoltage)
             {
-                Logger::logger().log_channel()->debug(
+                Logger::logger().log_channel()->info(
                     "Channel {} ending discharge step: load voltage {:.3f} V reached cutoff {:.3f} V",
                     channelID, runtime.loadVoltage, runtime.thresholdVoltage);
                 nextStep();
             }
             else if(runtime.state == State::Holding && runtime.thresholdVoltage <= runtime.loadVoltage)
             {
-                Logger::logger().log_channel()->debug(
+                Logger::logger().log_channel()->info(
                     "Channel {} ending hold step: load voltage {:.3f} V reached cutoff {:.3f} V",
                     channelID, runtime.loadVoltage, runtime.thresholdVoltage);
                 nextStep();
             }
+
         }  
+
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
 
@@ -205,7 +235,7 @@ void Channel::waitForControl(std::stop_token& stop)
 {
     {
         std::unique_lock lock(controlMutex);
-        controlCV.wait(lock, [this, &stop]()
+        controlCV.wait(lock, [this, &stop]
         {
             return !controlQueue.empty() || stop.stop_requested();
         });
@@ -214,38 +244,117 @@ void Channel::waitForControl(std::stop_token& stop)
 
 void Channel::execute(const Charge& cmd)
 {
-    load.disable(loadChannel);
-    runtime.loadEnabled = false;
+    try
+    {
+        load.disable(loadChannel);
+        runtime.loadEnabled = false;
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+        }
 
-    supply.setVoltage(cmd.voltage);
-    supply.setCurrent(cmd.current);
-    supply.enable();
-    runtime.supplyEnabled = true;
+        runtime.state = State::Error;
+        return;
+    }
 
-    module.setToCharge();  
-    runtime.moduleState = Module::State::CHARGE;
+    try
+    {
+        supply.setVoltage(cmd.voltage);
+        supply.setCurrent(cmd.current);
+        supply.enable();
+        runtime.supplyEnabled = true;
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return;
+    }
+
+
+    try 
+    {
+        module.setToCharge();  
+        runtime.moduleState = Module::State::CHARGE;
+    }
+    catch (const std::exception& e) 
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return;
+    }
     
     runtime.state = State::Charging;
     runtime.thresholdVoltage = cmd.cutoffVoltage;
     runtime.totalDuration = cmd.duration;
 
     runtime.startTimePoint = std::chrono::steady_clock::now() - std::chrono::seconds(runtime.timeElapsed);
-    Logger::logger().log_channel()->debug(
+    Logger::logger().log_channel()->info(
         "Channel {} starting charge: {:.3f} V, {:.3f} A, cutoff {:.3f} V, max {} s",
         channelID, cmd.voltage, cmd.current, cmd.cutoffVoltage, cmd.duration);
 }
 
 void Channel::execute(const Discharge& cmd)
 {
-    supply.disable();
-    runtime.supplyEnabled = false;
+    try
+    {
+        supply.disable();
+        runtime.supplyEnabled = false;
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+        }
 
-    load.setCurrent(cmd.current, loadChannel);
-    load.enable(loadChannel);
-    runtime.loadEnabled = true;
+        runtime.state = State::Error;
+        return;
+    }
 
-    module.setToDischarge();
-    runtime.moduleState = Module::State::DISCHARGE;
+    try
+    {
+        load.setCurrent(cmd.current, loadChannel);
+        load.enable(loadChannel);
+        runtime.loadEnabled = true;
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return;        
+    }
+
+    try
+    {
+        module.setToDischarge();
+        runtime.moduleState = Module::State::DISCHARGE;
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return; 
+    }
 
     runtime.state = State::Discharging;
     runtime.thresholdVoltage = cmd.cutoffVoltage;
@@ -259,15 +368,55 @@ void Channel::execute(const Discharge& cmd)
 
 void Channel::execute(const Hold& cmd)
 {
-    load.setCurrent(0, loadChannel);
-    load.disable(loadChannel);
-    runtime.loadEnabled = false;
+    try
+    {
+        load.setCurrent(0, loadChannel);
+        load.disable(loadChannel);
+        runtime.loadEnabled = false;
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+        }
 
-    supply.disable();
-    runtime.supplyEnabled = false;
+        runtime.state = State::Error;
+        return; 
+    }
 
-    module.setToDischarge(); 
-    runtime.moduleState = Module::State::DISCHARGE;
+    try
+    {
+        supply.disable();
+        runtime.supplyEnabled = false;
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return;
+    }
+
+    try
+    {
+        module.setToDischarge(); 
+        runtime.moduleState = Module::State::DISCHARGE;
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return; 
+    }
+
 
     runtime.state = State::Holding;
     runtime.thresholdVoltage = cmd.cutoffVoltage;
@@ -281,13 +430,53 @@ void Channel::execute(const Hold& cmd)
 
 void Channel::execute(const Rest& cmd)
 {
-    supply.disable();
-    load.disable(loadChannel);
-    runtime.supplyEnabled = false;
-    runtime.loadEnabled = false;
+    try
+    {
+        supply.disable();
+        runtime.supplyEnabled = false;
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+        }
 
-    module.setToOff();
-    runtime.moduleState = Module::State::OFF;
+        runtime.state = State::Error;
+        return; 
+    }
+
+    try 
+    {
+        load.disable(loadChannel);
+        runtime.loadEnabled = false;
+    }
+    catch (const std::exception& e) 
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return; 
+    }
+
+    try 
+    {
+        module.setToOff();
+        runtime.moduleState = Module::State::OFF;
+    } 
+    catch (const std::exception& e) 
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return; 
+    }
 
     runtime.state = State::Resting;
     runtime.totalDuration = cmd.duration;
@@ -307,13 +496,15 @@ void Channel::execute(const Goto& cmd)
         return;
     }
 
-   if (runtime.currentLoop >= cmd.repeatCount)
+    if (runtime.currentLoop >= cmd.repeatCount)
     {
         runtime.currentLoop = 0;
         Logger::logger().log_channel()->debug("Channel {} completing goto step after {} repeat(s)",channelID, cmd.repeatCount);
         nextStep();
         return;
-    }else{
+    }
+    else
+    {
         ++runtime.currentLoop;
         runtime.currentStep = static_cast<std::size_t>(cmd.targetStep);
 
@@ -327,24 +518,95 @@ void Channel::execute(const Goto& cmd)
 
 void Channel::polling()
 {
-    load.restoreState();
-    supply.restoreState();
-
-    if(module.queryState() != runtime.moduleState)
+    try
     {
-        if(runtime.moduleState == Module::CHARGE)
-            module.setToCharge();
-        else if(runtime.moduleState == Module::DISCHARGE)
-            module.setToDischarge();
-        else if(runtime.moduleState == Module::OFF)
-            module.setToOff();
+        load.restoreState();
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return; 
     }
 
-    Load::Measurements loadMeasurements = load.measureAll(loadChannel);
+    try
+    {
+        supply.restoreState();
+    }
+    catch (const std::exception& e)
+    {
+       if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return; 
+    }    
+
+    try
+    {
+        if(module.queryState() != runtime.moduleState)
+        {
+            if(runtime.moduleState == Module::CHARGE)
+                module.setToCharge();
+            else if(runtime.moduleState == Module::DISCHARGE)
+                module.setToDischarge();
+            else if(runtime.moduleState == Module::OFF)
+                module.setToOff();
+        }
+    }
+    catch (const std::exception& e)
+    {
+       if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return; 
+    }
+    
+    Load::Measurements loadMeasurements;
+    Supply::Measurements supplyMeasurements;
+
+    try
+    {
+        loadMeasurements = load.measureAll(loadChannel);
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return; 
+    }
+
     runtime.loadVoltage = loadMeasurements.voltage;
     runtime.loadCurrent = loadMeasurements.current;
 
-    Supply::Measurements supplyMeasurements = supply.measureAll();
+    try 
+    {
+        supplyMeasurements = supply.measureAll();
+    } 
+    catch (const std::exception& e) 
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return; 
+    }
+
     runtime.supplyVoltage = supplyMeasurements.voltage;
     runtime.supplyCurrent = supplyMeasurements.current;
 
@@ -355,8 +617,9 @@ void Channel::polling()
 
 bool Channel::startExperiment()
 {
-    if (runtime.state != State::Idle)
+    if (runtime.state != State::Idle && runtime.state != State::Finished)
     {
+        Logger::logger().log_channel()->error("Channel {} is currently in state {}",channelID, stateToString(runtime.state));
         return false;
     }
 
@@ -366,9 +629,9 @@ bool Channel::startExperiment()
         return false;
     }
 
-
     inProcess = true;
     running = true;
+
     return true;
 }
 
@@ -381,9 +644,53 @@ bool Channel::pauseExperiment()
         return false;
     }
 
-    supply.disable();
-    load.disable(loadChannel);
-    module.setToOff();
+   try
+    {
+        supply.disable();
+        runtime.supplyEnabled = false;
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return false; 
+    }
+
+    try 
+    {
+        load.disable(loadChannel);
+        runtime.loadEnabled = false;
+    }
+    catch (const std::exception& e) 
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return false; 
+    }
+
+    try 
+    {
+        module.setToOff();
+        runtime.moduleState = Module::State::OFF;
+    } 
+    catch (const std::exception& e) 
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return false; 
+    }
 
     runtime.state = State::Paused;
     runtime.supplyEnabled = false;
@@ -393,6 +700,7 @@ bool Channel::pauseExperiment()
     running = false;
 
     runtime.timeElapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - runtime.startTimePoint).count();
+
     return true;
 }
 
@@ -415,8 +723,9 @@ bool Channel::stopExperiment()
     {
         return false;
     }
-
+    
     finishExperiment();
+
     return true;
 }
 
@@ -432,14 +741,57 @@ bool Channel::skipStep()
 
 void Channel::finishExperiment()
 {
-    supply.disable();
-    load.disable(loadChannel);
-    module.setToOff();
+    try
+    {
+        supply.disable();
+        runtime.supplyEnabled = false;
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+        }
 
-    running = false;
+        runtime.state = State::Error;
+        return; 
+    }
+
+    try 
+    {
+        load.disable(loadChannel);
+        runtime.loadEnabled = false;
+    }
+    catch (const std::exception& e) 
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return; 
+    }
+
+    try 
+    {
+        module.setToOff();
+        runtime.moduleState = Module::State::OFF;
+    } 
+    catch (const std::exception& e) 
+    {
+        if (eventBus)
+        {
+            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+        }
+
+        runtime.state = State::Error;
+        return; 
+    }
 
     runtime = {};
     inProcess = false;
+    running = false;
     runtime.state = State::Finished;
 }
 
@@ -457,6 +809,108 @@ void Channel::nextStep()
     }
 
     runtime.state = State::Idle;
+}
+
+void Channel::connectAllDevices()
+{
+try
+    {
+        load.connect();
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({
+                channelID,
+                ChannelEventType::LOAD_DISCONNECTED,
+                fmt::format("Load connection failed: {}", e.what())
+            });
+        }
+    }
+
+    try
+    {
+        supply.connect();
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({
+                channelID,
+                ChannelEventType::SUPPLY_DISCONNECTED,
+                fmt::format("Supply connection failed: {}", e.what())
+            });
+        }
+    }
+
+    try
+    {
+        module.connect();
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({
+                channelID,
+                ChannelEventType::MODULE_DISCONNECTED,
+                fmt::format("Module connection failed: {}", e.what())
+            });
+        }
+    }
+}
+
+void Channel::disconnectAllDevices()
+{
+    try
+    {
+        load.disconnect();
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({
+                channelID,
+                ChannelEventType::LOAD_DISCONNECTED,
+                fmt::format("Load disconnection failed: {}", e.what())
+            });
+        }
+    }
+
+    try
+    {
+        supply.disconnect();
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({
+                channelID,
+                ChannelEventType::SUPPLY_DISCONNECTED,
+                fmt::format("Supply disconnection failed: {}", e.what())
+            });
+        }
+    }
+
+    try
+    {
+        module.disconnect();
+    }
+    catch (const std::exception& e)
+    {
+        if (eventBus)
+        {
+            eventBus->push({
+                channelID,
+                ChannelEventType::MODULE_DISCONNECTED,
+                fmt::format("Module disconnection failed: {}", e.what())
+            });
+        }
+    }
 }
 
 std::string Channel::stateToString(State state) const

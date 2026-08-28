@@ -78,8 +78,7 @@ std::string Load::query(const std::string& command)
     }
 
     Logger::logger().log_load()->error("Failed to query command \"{}\" from Load-{} after {} attempts", command, alias, maxRetries);
-
-    return "";
+    throw std::runtime_error("Failed to read response for command \"" + command + "\" from Load-" + alias);
 }
 
 bool Load::write(const std::string& command)
@@ -98,7 +97,7 @@ bool Load::write(const std::string& command)
     }
 
     Logger::logger().log_load()->error("Failed to write command \"{}\" to Load-{} after {} attempts", command, alias, maxRetries );
-    return false;
+    throw std::runtime_error("Failed to write command \"" + command + "\" to Load-" + alias);
 }
 
 bool Load::enable(int channel)

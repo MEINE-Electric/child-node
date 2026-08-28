@@ -225,6 +225,30 @@ src/drivers/supply.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/drivers/supply.cpp.s
 .PHONY : src/drivers/supply.cpp.s
 
+src/event/event.o: src/event/event.cpp.o
+.PHONY : src/event/event.o
+
+# target to build an object file
+src/event/event.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/event/event.cpp.o
+.PHONY : src/event/event.cpp.o
+
+src/event/event.i: src/event/event.cpp.i
+.PHONY : src/event/event.i
+
+# target to preprocess a source file
+src/event/event.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/event/event.cpp.i
+.PHONY : src/event/event.cpp.i
+
+src/event/event.s: src/event/event.cpp.s
+.PHONY : src/event/event.s
+
+# target to generate assembly for a file
+src/event/event.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/src/event/event.cpp.s
+.PHONY : src/event/event.cpp.s
+
 src/helper/helper.o: src/helper/helper.cpp.o
 .PHONY : src/helper/helper.o
 
@@ -414,6 +438,9 @@ help:
 	@echo "... src/drivers/supply.o"
 	@echo "... src/drivers/supply.i"
 	@echo "... src/drivers/supply.s"
+	@echo "... src/event/event.o"
+	@echo "... src/event/event.i"
+	@echo "... src/event/event.s"
 	@echo "... src/helper/helper.o"
 	@echo "... src/helper/helper.i"
 	@echo "... src/helper/helper.s"

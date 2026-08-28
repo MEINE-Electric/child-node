@@ -39,17 +39,15 @@ public:
      * connection management thread.
      */
     ~MQTT();
-
+    
     /**
-     * @brief Starts the MQTT connection manager.
-     *
-     * Starts a background thread that attempts to connect to the
-     * configured MQTT broker. If the connection fails, the client
-     * periodically retries the connection.
-     *
-     * @return true if the connection management thread was started
-     *         successfully; false otherwise.
-     */
+    * @brief Connects to the MQTT broker.
+    *
+    * Attempts to establish a connection to the configured MQTT broker.
+    *
+    * @return true if the connection was established successfully;
+    *         keeps retrying connection every 5 seconds.
+    */
     bool connect();
 
     /**
@@ -129,7 +127,7 @@ public:
      *         or std::nullopt if no event is available before the timeout.
      */
     std::optional<std::pair<std::string, std::string>>
-    waitForEvent();
+    waitForMQTTEvent();
 
 private:
 

@@ -61,6 +61,12 @@
 },
 {
   "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
+  "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/event/event.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/event/event.cpp",
+  "file": "/home/nakshatra/Projects/cycler_app/child_node/src/event/event.cpp",
+  "output": "CMakeFiles/app.dir/src/event/event.cpp.o"
+},
+{
+  "directory": "/home/nakshatra/Projects/cycler_app/child_node/build",
   "command": "/usr/bin/c++ -DFMT_SHARED -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DSPDLOG_SHARED_LIB -I/home/nakshatra/Projects/cycler_app/child_node/inc -g -std=gnu++20 -o CMakeFiles/app.dir/src/helper/helper.cpp.o -c /home/nakshatra/Projects/cycler_app/child_node/src/helper/helper.cpp",
   "file": "/home/nakshatra/Projects/cycler_app/child_node/src/helper/helper.cpp",
   "output": "CMakeFiles/app.dir/src/helper/helper.cpp.o"

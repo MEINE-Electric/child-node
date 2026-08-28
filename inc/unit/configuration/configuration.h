@@ -9,22 +9,34 @@
 #include "drivers/supply.h"
 #include "drivers/module.h"
 #include "mqtt/mqtt.h"
+#include "registry/registry.h"
 #include "unit/channel/channel.h"
+#include "event/event.h"
 
 class UnitConfiguration
 {
 public:
-    UnitConfiguration(std::string nodeID, MQTT& mqtt);
+    UnitConfiguration(std::string nodeID, MQTT& mqtt, Registry& registry);
     ~UnitConfiguration();
 
     void startEventWatchdog();
     void stopEventWatchdog();
     void startTelemetryThread();
     void stopTelemetryThread();
+    void startReconnectionThread();
+    void stopReconnectionThread();
+
+    bool waitForConfiguration();
 private:
     std::string nodeID;
     MQTT& mqtt;
+    Registry& registry;
+    ChannelEventBus eventBus;
     
+    std::mutex mutex;
+    std::condition_variable cv;
+    bool configured = false;
+
     std::unordered_map<std::string, Channel> channelList;
     std::unordered_map<std::string, Load> loadList;
     std::unordered_map<std::string, Supply> supplyList;
@@ -32,6 +44,7 @@ private:
 
     std::jthread eventWatchdog;
     std::jthread telemetryThread;
+    std::jthread reconnectionThread;
     std::mutex channelListMutex;
 
     void checkForEvents();

@@ -8,6 +8,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/app.dir/src/drivers/serial.cpp.o.d"
   "CMakeFiles/app.dir/src/drivers/supply.cpp.o"
   "CMakeFiles/app.dir/src/drivers/supply.cpp.o.d"
+  "CMakeFiles/app.dir/src/event/event.cpp.o"
+  "CMakeFiles/app.dir/src/event/event.cpp.o.d"
   "CMakeFiles/app.dir/src/helper/helper.cpp.o"
   "CMakeFiles/app.dir/src/helper/helper.cpp.o.d"
   "CMakeFiles/app.dir/src/helper/logger/logger.cpp.o"
