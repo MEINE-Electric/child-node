@@ -36,14 +36,6 @@ bool Load::connect()
 
 bool Load::disconnect()
 {
-    for (int i = 0; i < maxChannels; ++i)
-    {
-        if(states[i].outputEnabled)
-        {
-            disable(i+1);
-        }
-    }
-
     if(!serial.close())
     {
         Logger::logger().log_load()->error("Load-{} could not disconnect at {}",alias,serial.getPort());
@@ -52,6 +44,11 @@ bool Load::disconnect()
 
     Logger::logger().log_load()->debug("Load-{} disconnected at {}",alias,serial.getPort());
     return true;
+}
+
+bool Load::isConnected()
+{
+    return serial.isOpen();
 }
 
 std::string Load::query(const std::string& command)

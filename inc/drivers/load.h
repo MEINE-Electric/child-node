@@ -80,6 +80,15 @@ public:
     bool disconnect();
 
     /**
+     * @brief Returns whether the load is currently connected through
+     * the serial interface.    
+
+     * @return true if the load is connected;
+     *         false otherwise.
+     */
+    bool isConnected();
+
+    /**
      * @brief Returns the serial port used by the load.
      *
      * @return Serial port name.

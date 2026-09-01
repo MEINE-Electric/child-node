@@ -43,11 +43,6 @@ bool Module::connect()
 
 bool Module::disconnect()
 {
-    if(state != OFF)
-    {
-        setToOff();
-    }
-
     if(!serial.close())
     {
         Logger::logger().log_module()->error("Module-{} could not disconnect at {}",alias,serial.getPort());
@@ -56,6 +51,11 @@ bool Module::disconnect()
 
     Logger::logger().log_module()->debug("Module-{} disconnected at {}",alias,serial.getPort());
     return true;
+}
+
+bool Module::isConnected()
+{
+    return serial.isOpen();
 }
 
 std::string Module::query(const std::string& command)

@@ -36,11 +36,6 @@ bool Supply::connect()
 
 bool Supply::disconnect()
 {
-    if(state.outputEnabled)
-    {
-        disable();
-    }
-
     if(!serial.close())
     {
         Logger::logger().log_supply()->error("Supply-{} could not disconnect at {}",alias,serial.getPort());
@@ -49,6 +44,11 @@ bool Supply::disconnect()
 
     Logger::logger().log_supply()->debug("Supply-{} disconnected at {}",alias,serial.getPort());
     return true;
+}
+
+bool Supply::isConnected()
+{
+    return serial.isOpen();
 }
 
 std::string Supply::query(const std::string& command)

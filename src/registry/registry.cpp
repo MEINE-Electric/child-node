@@ -166,6 +166,9 @@ void Registry::watchdog(std::stop_token stop)
                             Instrument tempDevice = {.idn=identity.idn, .port=port, .baudrate=identity.baudrate, .available=true};
                             devices[port] = tempDevice;
                         }
+
+                        deviceAdded = true;
+                        cv.notify_one();
                     }
                     if (event->mask & IN_DELETE){
                         std::lock_guard<std::mutex> lock(mutex);
@@ -205,4 +208,28 @@ void Registry::setToUnavailable(std::string& port)
 {
     std::lock_guard<std::mutex> lock(mutex);
     devices[port] = Instrument({.idn=devices[port].idn, .port=port, .baudrate=devices[port].baudrate, .available=false});
+}
+
+std::string Registry::findDeviceByIDN(const std::string& idn)
+{
+    std::lock_guard<std::mutex> lock(mutex);
+    for (const auto& [port, device]: devices)
+    {
+        if (device.idn == idn)
+            return port;
+    }
+
+    return "";
+}
+
+void Registry::waitForDevice()
+{
+    std::unique_lock<std::mutex> lock(mutex);
+
+    // Wait temporarily releases the lock and reacquires it after being notified
+    cv.wait(lock, [this] { 
+        return deviceAdded;
+    });
+
+    deviceAdded = false;
 }

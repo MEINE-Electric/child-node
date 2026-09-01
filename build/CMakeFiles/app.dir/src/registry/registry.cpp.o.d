@@ -278,6 +278,7 @@ CMakeFiles/app.dir/src/registry/registry.cpp.o: \
  /usr/include/assert.h /usr/include/spdlog/details/log_msg_buffer.h \
  /usr/include/spdlog/details/log_msg.h \
  /home/nakshatra/Projects/cycler_app/child_node/inc/registry/registry.h \
+ /usr/include/c++/16.1.1/condition_variable \
  /home/nakshatra/Projects/cycler_app/child_node/inc/drivers/serial.h \
  /usr/include/fcntl.h /usr/include/bits/fcntl.h \
  /usr/include/bits/fcntl-linux.h /usr/include/bits/types/struct_iovec.h \

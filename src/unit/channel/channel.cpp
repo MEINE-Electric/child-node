@@ -90,12 +90,16 @@ void Channel::enqueueCommand(const std::string& command)
 
 void Channel::startWorkerThread()
 {
+    Logger::logger().log_channel()->debug("Channel {} starting worker thread initialization", channelID);
+    
     try
     {
+        Logger::logger().log_channel()->debug("Channel {} connecting devices", channelID);
         connectAllDevices();
     }
     catch (const std::exception& e)
     {
+        Logger::logger().log_channel()->error("Channel {} exception during device connection: {}", channelID, e.what());
         return;
     }
 
@@ -113,21 +117,31 @@ void Channel::startWorkerThread()
 
 void Channel::stopWorkerThread()
 {
+    Logger::logger().log_channel()->debug("Channel {} stopping worker thread", channelID);
+    
     if (workerThread.joinable())
     {
         workerThread.request_stop();
         workerThread.join();
+        controlCV.notify_one();
         Logger::logger().log_channel()->info("Channel-{} worker thread stopped",channelID);
     }
 
+    Logger::logger().log_channel()->debug("Channel {} disconnecting devices", channelID);
     try
     {
         disconnectAllDevices();
     }
     catch (const std::exception& e)
     {
+        Logger::logger().log_channel()->error("Channel {} exception during device disconnection: {}", channelID, e.what());
         return;
     }
+}
+
+void Channel::clearState()
+{
+    runtime.state = State::Idle;
 }
 
 // Private Functions
@@ -137,6 +151,22 @@ void Channel::run(std::stop_token stop)
     {
         if(runtime.state == State::Error)
         {
+            // Error handling: disable all devices and stop the experiment
+            Logger::logger().log_channel()->error("Channel {} encountered an error state, disabling all devices and stopping the experiment", channelID);
+    
+            if (supply.isConnected())
+                supply.disable();
+
+            if (load.isConnected())
+                load.disable(loadChannel);
+
+            if (module.isConnected())
+                module.setToOff();
+            
+            runtime.supplyEnabled = false;
+            runtime.loadEnabled = false;
+            runtime.moduleState = Module::State::OFF;
+
             running = false;
         }
 
@@ -253,7 +283,7 @@ void Channel::execute(const Charge& cmd)
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+            eventBus->push({channelID, load.getIDN(), load.getPort(), ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -271,7 +301,7 @@ void Channel::execute(const Charge& cmd)
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+            eventBus->push({channelID, supply.getIDN(), supply.getPort(), ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -288,7 +318,7 @@ void Channel::execute(const Charge& cmd)
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+            eventBus->push({channelID, module.getIDN(), module.getPort(), ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -316,7 +346,7 @@ void Channel::execute(const Discharge& cmd)
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+            eventBus->push({channelID, supply.getIDN(), supply.getPort(), ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -333,7 +363,7 @@ void Channel::execute(const Discharge& cmd)
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+            eventBus->push({channelID, load.getIDN(), load.getPort(), ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -349,7 +379,7 @@ void Channel::execute(const Discharge& cmd)
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+            eventBus->push({channelID, module.getIDN(), module.getPort(), ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -378,7 +408,7 @@ void Channel::execute(const Hold& cmd)
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+            eventBus->push({channelID, load.getIDN(), load.getPort(), ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -394,7 +424,7 @@ void Channel::execute(const Hold& cmd)
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+            eventBus->push({channelID, supply.getIDN(), supply.getPort(), ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -410,7 +440,7 @@ void Channel::execute(const Hold& cmd)
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+            eventBus->push({channelID, module.getIDN(), module.getPort(), ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -439,7 +469,7 @@ void Channel::execute(const Rest& cmd)
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+            eventBus->push({channelID, supply.getIDN(), supply.getPort(), ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -455,7 +485,7 @@ void Channel::execute(const Rest& cmd)
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+            eventBus->push({channelID, load.getIDN(), load.getPort(), ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -471,7 +501,7 @@ void Channel::execute(const Rest& cmd)
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+            eventBus->push({channelID, module.getIDN(), module.getPort(), ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -526,7 +556,7 @@ void Channel::polling()
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+            eventBus->push({channelID, load.getIDN(), load.getPort(), ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -541,7 +571,7 @@ void Channel::polling()
     {
        if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+            eventBus->push({channelID, supply.getIDN(), supply.getPort(), ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -564,7 +594,7 @@ void Channel::polling()
     {
        if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+            eventBus->push({channelID, module.getIDN(), module.getPort(), ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -582,7 +612,7 @@ void Channel::polling()
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+            eventBus->push({channelID, load.getIDN(), load.getPort(), ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -600,7 +630,7 @@ void Channel::polling()
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+            eventBus->push({channelID, supply.getIDN(), supply.getPort(), ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -610,7 +640,7 @@ void Channel::polling()
     runtime.supplyVoltage = supplyMeasurements.voltage;
     runtime.supplyCurrent = supplyMeasurements.current;
 
-    Logger::logger().log_channel()->debug(
+    Logger::logger().log_channel()->info(
         "Channel {} measurements: load={:.3f} V, {:.3f} A; supply={:.3f} V, {:.3f} A",
         channelID, runtime.loadVoltage, runtime.loadCurrent, runtime.supplyVoltage, runtime.supplyCurrent);
 }
@@ -653,7 +683,7 @@ bool Channel::pauseExperiment()
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+            eventBus->push({channelID, supply.getIDN(), supply.getPort(), ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -669,7 +699,7 @@ bool Channel::pauseExperiment()
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+            eventBus->push({channelID, load.getIDN(), load.getPort(), ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -685,7 +715,7 @@ bool Channel::pauseExperiment()
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+            eventBus->push({channelID, module.getIDN(), module.getPort(), ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -750,7 +780,7 @@ void Channel::finishExperiment()
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
+            eventBus->push({channelID, supply.getIDN(), supply.getPort(), ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -766,7 +796,7 @@ void Channel::finishExperiment()
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
+            eventBus->push({channelID, load.getIDN(), load.getPort(), ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -782,7 +812,7 @@ void Channel::finishExperiment()
     {
         if (eventBus)
         {
-            eventBus->push({channelID, ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
+            eventBus->push({channelID, module.getIDN(), module.getPort(), ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())});
         }
 
         runtime.state = State::Error;
@@ -813,104 +843,118 @@ void Channel::nextStep()
 
 void Channel::connectAllDevices()
 {
-try
+    Logger::logger().log_channel()->debug("Channel {} connecting all devices", channelID);
+
+    try
     {
+        Logger::logger().log_channel()->debug("Channel {} attempting to connect Load at port {}", channelID, load.getPort());
         load.connect();
+        Logger::logger().log_channel()->info("Channel {} successfully connected Load ({})", channelID, load.getIDN());
     }
     catch (const std::exception& e)
     {
+        Logger::logger().log_channel()->error("Channel {} failed to connect Load at {}: {}", channelID, load.getPort(), e.what());
         if (eventBus)
         {
             eventBus->push({
-                channelID,
-                ChannelEventType::LOAD_DISCONNECTED,
-                fmt::format("Load connection failed: {}", e.what())
+                channelID, load.getIDN(), load.getPort(), ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load connection failed: {}", e.what())
             });
         }
     }
 
     try
     {
+        Logger::logger().log_channel()->debug("Channel {} attempting to connect Supply at port {}", channelID, supply.getPort());
         supply.connect();
+        Logger::logger().log_channel()->info("Channel {} successfully connected Supply ({})", channelID, supply.getIDN());
     }
     catch (const std::exception& e)
     {
+        Logger::logger().log_channel()->error("Channel {} failed to connect Supply at {}: {}", channelID, supply.getPort(), e.what());
         if (eventBus)
         {
             eventBus->push({
-                channelID,
-                ChannelEventType::SUPPLY_DISCONNECTED,
-                fmt::format("Supply connection failed: {}", e.what())
+                channelID, supply.getIDN(), supply.getPort(), ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply connection failed: {}", e.what())
             });
         }
     }
 
     try
     {
+        Logger::logger().log_channel()->debug("Channel {} attempting to connect Module at port {}", channelID, module.getPort());
         module.connect();
+        Logger::logger().log_channel()->info("Channel {} successfully connected Module ({})", channelID, module.getIDN());
     }
     catch (const std::exception& e)
     {
+        Logger::logger().log_channel()->error("Channel {} failed to connect Module at {}: {}", channelID, module.getPort(), e.what());
         if (eventBus)
         {
             eventBus->push({
-                channelID,
-                ChannelEventType::MODULE_DISCONNECTED,
-                fmt::format("Module connection failed: {}", e.what())
+                channelID, module.getIDN(), module.getPort(), ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module connection failed: {}", e.what())
             });
         }
     }
+
+    Logger::logger().log_channel()->debug("Channel {} device connection phase completed", channelID);
 }
 
 void Channel::disconnectAllDevices()
 {
+    Logger::logger().log_channel()->debug("Channel {} disconnecting all devices", channelID);
+
     try
     {
+        Logger::logger().log_channel()->debug("Channel {} attempting to disconnect Load from port {}", channelID, load.getPort());
         load.disconnect();
+        Logger::logger().log_channel()->info("Channel {} successfully disconnected Load", channelID);
     }
     catch (const std::exception& e)
     {
+        Logger::logger().log_channel()->error("Channel {} failed to disconnect Load from {}: {}", channelID, load.getPort(), e.what());
         if (eventBus)
         {
             eventBus->push({
-                channelID,
-                ChannelEventType::LOAD_DISCONNECTED,
-                fmt::format("Load disconnection failed: {}", e.what())
+                channelID, load.getIDN(), load.getPort(), ChannelEventType::LOAD_DISCONNECTED, fmt::format("Load disconnection failed: {}", e.what())
             });
         }
     }
 
     try
     {
+        Logger::logger().log_channel()->debug("Channel {} attempting to disconnect Supply from port {}", channelID, supply.getPort());
         supply.disconnect();
+        Logger::logger().log_channel()->info("Channel {} successfully disconnected Supply", channelID);
     }
     catch (const std::exception& e)
     {
+        Logger::logger().log_channel()->error("Channel {} failed to disconnect Supply from {}: {}", channelID, supply.getPort(), e.what());
         if (eventBus)
         {
             eventBus->push({
-                channelID,
-                ChannelEventType::SUPPLY_DISCONNECTED,
-                fmt::format("Supply disconnection failed: {}", e.what())
+                channelID, supply.getIDN(), supply.getPort(), ChannelEventType::SUPPLY_DISCONNECTED, fmt::format("Supply disconnection failed: {}", e.what())
             });
         }
     }
 
     try
     {
+        Logger::logger().log_channel()->debug("Channel {} attempting to disconnect Module from port {}", channelID, module.getPort());
         module.disconnect();
+        Logger::logger().log_channel()->info("Channel {} successfully disconnected Module", channelID);
     }
     catch (const std::exception& e)
     {
+        Logger::logger().log_channel()->error("Channel {} failed to disconnect Module from {}: {}", channelID, module.getPort(), e.what());
         if (eventBus)
         {
             eventBus->push({
-                channelID,
-                ChannelEventType::MODULE_DISCONNECTED,
-                fmt::format("Module disconnection failed: {}", e.what())
+                channelID, module.getIDN(), module.getPort(), ChannelEventType::MODULE_DISCONNECTED, fmt::format("Module disconnection failed: {}", e.what())
             });
         }
     }
+
+    Logger::logger().log_channel()->debug("Channel {} device disconnection phase completed", channelID);
 }
 
 std::string Channel::stateToString(State state) const

@@ -83,6 +83,15 @@ public:
     }
 
     /**
+     * @brief Returns whether the load is currently connected through
+     * the serial interface.    
+
+     * @return true if the load is connected;
+     *         false otherwise.
+     */
+    bool isConnected();
+
+    /**
      * @brief Returns the expected module identification string.
      *
      * @return Expected IDN string.

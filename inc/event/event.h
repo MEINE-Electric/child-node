@@ -7,14 +7,16 @@
 
 enum ChannelEventType
 {
-    LOAD_DISCONNECTED = 101,
-    SUPPLY_DISCONNECTED = 201,
-    MODULE_DISCONNECTED = 301,
+    LOAD_DISCONNECTED,
+    SUPPLY_DISCONNECTED,
+    MODULE_DISCONNECTED
 };
 
 struct ChannelEvent
 {
     std::string channelID;
+    std::string deviceIDN;
+    std::string devicePort;
     ChannelEventType type;
     std::string message;
 };

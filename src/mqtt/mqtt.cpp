@@ -1,7 +1,6 @@
 #include <mqtt/exception.h>
 #include <mqtt/message.h>
 #include <nlohmann/json.hpp>
-#include <stop_token>
 #include <thread>
 
 #include "mqtt/mqtt.h"

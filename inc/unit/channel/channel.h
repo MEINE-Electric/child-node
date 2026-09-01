@@ -61,6 +61,9 @@ public:
     void startWorkerThread();
     void stopWorkerThread();
 
+    // -------- Control Functions --------
+    void clearState();
+
     // -------- Getter -------
     std::string getChannelID() const {return channelID;}
     bool isInProcess() const {return inProcess; }

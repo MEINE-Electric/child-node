@@ -52,4 +52,7 @@ private:
     void handleExperiment(const std::string& message);
     void handleControl(const std::string& message);
     void publishFeedback(const std::string& section, const std::string& message);
+
+    template <typename T> 
+    void reconnectDevice(std::unordered_map<std::string, T>& devices, const ChannelEvent& event);
 };

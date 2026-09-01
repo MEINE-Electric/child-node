@@ -1,5 +1,6 @@
 #pragma once
 
+#include <condition_variable>
 #include <cstddef>
 #include <stop_token>
 #include <string>
@@ -139,9 +140,25 @@ public:
      */
     void setToUnavailable(std::string& port);
 
+    /**
+     * @brief Finds an instrument by given IDN.
+     *
+     * @param idn Identification name of the instrument to find.
+     */
+    std::string findDeviceByIDN(const std::string& idn);
+
+    /**
+     *
+     * @brief Wait till an device is discovered and added to the device list.
+     *
+     */
+    void waitForDevice();
+
 private:
     std::unordered_map<std::string, Instrument> devices;
 
     std::jthread watchdogThread;
     std::mutex mutex;
+    std::condition_variable cv;
+    bool deviceAdded = false;
 };

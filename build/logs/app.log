@@ -1,0 +1,1575 @@
+12:01:27 | MQTT     [info] Connected to 127.0.0.1
+12:01:27 | REGISTRY [info] Found serial port: /dev/ttyUSB0
+12:01:29 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB0
+12:01:29 | REGISTRY [info] Found serial port: /dev/ttyUSB2
+12:01:31 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB2
+12:01:31 | REGISTRY [info] Found serial port: /dev/ttyUSB1
+12:01:33 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB1
+12:01:33 | REGISTRY [info] Discovered 3 serial port(s)
+12:01:33 | UNIT     [info] Event watchdog started
+12:01:34 | MQTT     [info] Received on config/1: [
+  {
+    "channelID": "1",
+    "loadPort": "/dev/ttyUSB1",
+    "loadIDN": "UNI-TREND,UTL8212+,CDLB225210095,V2.46",
+    "totalLoadChannelCount": 1,
+    "loadChannel": 1,
+    "loadBaudRate": 9600,
+    "supplyPort": "/dev/ttyUSB2",
+    "supplyIDN": "Uni-Trend,UDP6730,AWP7323380017,V1.07",
+    "supplyBaudRate": 9600,
+    "modulePort": "/dev/ttyUSB0",
+    "moduleIDN": "Module_1",
+    "moduleBaudRate": 9600
+  }
+]
+12:01:37 | CHANNEL  [info] Channel-1 worker thread started
+12:01:37 | UNIT     [info] Configuration successfully replaced
+12:01:37 | UNIT     [info] Telemetry thread started
+12:01:39 | MQTT     [info] Received on experiment/1: {
+  "channelID": "1",
+  "steps": [
+    {
+      "command": "Charge",
+      "voltage": 14.2,
+      "current": 1.0,
+      "cutoffVoltage": 4.2,
+      "duration": 3600
+    },
+    {
+      "command": "Discharge",
+      "current": 1.0,
+      "cutoffVoltage": -3.0,
+      "duration": 3600
+    },
+    {
+      "command": "Goto",
+      "additionalRepeats": 4, "targetSteps": 0
+    }
+  ]
+}
+12:01:39 | UNIT     [info] Experiment loaded for channel 1
+12:01:42 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "start"
+}
+12:01:43 | UNIT     [info] Control command 'start' queued for channel 1
+12:01:43 | CHANNEL  [info] Channel 1 starting charge: 14.200 V, 1.000 A, cutoff 4.200 V, max 3600 s
+12:01:44 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=14.180 V, 0.000 A
+12:01:44 | CHANNEL  [info] Channel 1 ending charge step: supply voltage 14.180 V reached cutoff 4.200 V
+12:01:46 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+12:01:47 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+12:01:48 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB0: Input/output error
+12:01:48 | MODULE   [warning] Write attempt 1/3 failed for command "STATE?" to Module-1
+12:01:48 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB0: Input/output error
+12:01:48 | MODULE   [warning] Write attempt 2/3 failed for command "STATE?" to Module-1
+12:01:48 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB0: Input/output error
+12:01:48 | MODULE   [warning] Write attempt 3/3 failed for command "STATE?" to Module-1
+12:01:48 | MODULE   [error] Failed to write command "STATE?" to Module-1 after 3 attempts
+12:01:54 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB0
+12:01:56 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:01:56 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+12:01:56 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:01:56 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+12:01:56 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:01:56 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+12:01:56 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+12:01:56 | UNIT     [warning] Node is empty, cannot reconnect
+12:01:57 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:01:57 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+12:01:57 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:01:57 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+12:01:57 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:01:57 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+12:01:57 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+12:01:57 | UNIT     [warning] Node is empty, cannot reconnect
+12:01:58 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:01:58 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+12:01:58 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:01:58 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+12:01:58 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:01:58 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+12:01:58 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+12:01:58 | UNIT     [warning] Node is empty, cannot reconnect
+12:01:59 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:01:59 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+12:01:59 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:01:59 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+12:01:59 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:01:59 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+12:01:59 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+12:01:59 | UNIT     [warning] Node is empty, cannot reconnect
+12:02:00 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:02:00 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+12:02:00 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:02:00 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+12:02:00 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:02:00 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+12:02:00 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+12:02:00 | UNIT     [warning] Node is empty, cannot reconnect
+12:02:01 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:02:01 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+12:02:01 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:02:01 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+12:02:01 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:02:01 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+12:02:01 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+12:02:01 | UNIT     [warning] Node is empty, cannot reconnect
+12:02:02 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:02:02 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+12:02:02 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:02:02 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+12:02:02 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Bad file descriptor
+12:02:02 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+12:02:02 | MODULE   [error] Failed to write command "STATE DISCHAR13:22:11 | MQTT     [info] Connected to 127.0.0.1
+13:22:11 | REGISTRY [info] Found serial port: /dev/ttyUSB0
+13:22:13 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB0
+13:22:13 | REGISTRY [info] Found serial port: /dev/ttyUSB2
+13:22:15 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB2
+13:22:15 | REGISTRY [info] Found serial port: /dev/ttyUSB1
+13:22:17 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB1
+13:22:17 | REGISTRY [info] Discovered 3 serial port(s)
+13:22:17 | UNIT     [info] Event watchdog started
+13:22:23 | MQTT     [info] Received on config/1: [
+  {
+    "channelID": "1",
+    "loadPort": "/dev/ttyUSB1",
+    "loadIDN": "UNI-TREND,UTL8212+,CDLB225210095,V2.46",
+    "totalLoadChannelCount": 1,
+    "loadChannel": 1,
+    "loadBaudRate": 9600,
+    "supplyPort": "/dev/ttyUSB2",
+    "supplyIDN": "Uni-Trend,UDP6730,AWP7323380017,V1.07",
+    "supplyBaudRate": 9600,
+    "modulePort": "/dev/ttyUSB0",
+    "moduleIDN": "Module_1",
+    "moduleBaudRate": 9600
+  }
+]
+13:22:25 | CHANNEL  [info] Channel-1 worker thread started
+13:22:25 | UNIT     [info] Configuration successfully replaced
+13:22:25 | UNIT     [info] Telemetry thread started
+13:22:25 | MQTT     [info] Received on experiment/1: {
+  "channelID": "1",
+  "steps": [
+    {
+      "command": "Charge",
+      "voltage": 14.2,
+      "current": 1.0,
+      "cutoffVoltage": 4.2,
+      "duration": 3600
+    },
+    {
+      "command": "Discharge",
+      "current": 1.0,
+      "cutoffVoltage": -3.0,
+      "duration": 3600
+    },
+    {
+      "command": "Goto",
+      "additionalRepeats": 4, "targetSteps": 0
+    }
+  ]
+}
+13:22:25 | UNIT     [info] Experiment loaded for channel 1
+13:22:28 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "start"
+}
+13:22:28 | UNIT     [info] Control command 'start' queued for channel 1
+13:22:28 | CHANNEL  [info] Channel 1 starting charge: 14.200 V, 1.000 A, cutoff 4.200 V, max 3600 s
+13:22:29 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=14.180 V, 0.000 A
+13:22:29 | CHANNEL  [info] Channel 1 ending charge step: supply voltage 14.180 V reached cutoff 4.200 V
+13:22:32 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.020 V, 0.000 A
+13:22:33 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB1: Input/output error
+13:22:33 | LOAD     [warning] Write attempt 1/3 failed for command "CHAN 1" to Load-1
+13:22:33 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB1: Input/output error
+13:22:33 | LOAD     [warning] Write attempt 2/3 failed for command "CHAN 1" to Load-1
+13:22:33 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB1: Input/output error
+13:22:33 | LOAD     [warning] Write attempt 3/3 failed for command "CHAN 1" to Load-1
+13:22:33 | LOAD     [error] Failed to write command "CHAN 1" to Load-1 after 3 attempts
+13:22:38 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:22:38 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:22:38 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:22:38 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:22:38 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:22:41 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB3
+13:22:41 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB2: Input/output error
+13:22:41 | SUPPLY   [warning] Write attempt 1/3 failed for command "OUTP OFF" to Supply-1
+13:22:41 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB2: Input/output error
+13:22:41 | SUPPLY   [warning] Write attempt 2/3 failed for command "OUTP OFF" to Supply-1
+13:22:41 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB2: Input/output error
+13:22:41 | SUPPLY   [warning] Write attempt 3/3 failed for command "OUTP OFF" to Supply-1
+13:22:41 | SUPPLY   [error] Failed to write command "OUTP OFF" to Supply-1 after 3 attempts
+13:22:44 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB4
+13:22:44 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Input/output error
+13:22:44 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:22:44 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Input/output error
+13:22:44 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:22:44 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB0: Input/output error
+13:22:44 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:22:44 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:22:56 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:22:56 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:22:56 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:22:56 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:22:56 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:22:59 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB1
+13:22:59 | SERIAL   [error] Failed to open /dev/ttyUSB2: No such file or directory
+13:22:59 | SERIAL   [error] Failed to open /dev/ttyUSB2: No such file or directory
+13:22:59 | SERIAL   [error] Failed to open /dev/ttyUSB2: No such file or directory
+13:22:59 | SERIAL   [error] Failed to open /dev/ttyUSB2: No such file or directory
+13:22:59 | SERIAL   [error] Failed to open /dev/ttyUSB2: No such file or directory
+13:23:00 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:23:00 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:23:00 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:23:00 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:23:00 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:23:03 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB1
+13:23:06 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB2
+13:23:08 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB4: Input/output error
+13:23:08 | SUPPLY   [warning] Write attempt 1/3 failed for command "OUTP OFF" to Supply-1
+13:23:08 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB4: Input/output error
+13:23:08 | SUPPLY   [warning] Write attempt 2/3 failed for command "OUTP OFF" to Supply-1
+13:23:08 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB4: Input/output error
+13:23:08 | SUPPLY   [warning] Write attempt 3/3 failed for command "OUTP OFF" to Supply-1
+13:23:08 | SUPPLY   [error] Failed to write command "OUTP OFF" to Supply-1 after 3 attempts
+13:23:09 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB3: Input/output error
+13:23:09 | LOAD     [warning] Write attempt 1/3 failed for command "CHAN 1" to Load-1
+13:23:09 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB3: Input/output error
+13:23:09 | LOAD     [warning] Write attempt 2/3 failed for command "CHAN 1" to Load-1
+13:23:09 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB3: Input/output error
+13:23:09 | LOAD     [warning] Write attempt 3/3 failed for command "CHAN 1" to Load-1
+13:23:09 | LOAD     [error] Failed to write command "CHAN 1" to Load-1 after 3 attempts
+13:23:24 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB3
+13:23:38 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB0
+13:23:38 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB1: Input/output error
+13:23:38 | SUPPLY   [warning] Write attempt 1/3 failed for command "OUTP OFF" to Supply-1
+13:23:38 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB1: Input/output error
+13:23:38 | SUPPLY   [warning] Write attempt 2/3 failed for command "OUTP OFF" to Supply-1
+13:23:38 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB1: Input/output error
+13:23:38 | SUPPLY   [warning] Write attempt 3/3 failed for command "OUTP OFF" to Supply-1
+13:23:38 | SUPPLY   [error] Failed to write command "OUTP OFF" to S13:30:12 | MQTT     [info] Connected to 127.0.0.1
+13:30:12 | REGISTRY [info] Found serial port: /dev/ttyUSB0
+13:30:15 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB0
+13:30:15 | REGISTRY [info] Found serial port: /dev/ttyUSB3
+13:30:17 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB3
+13:30:17 | REGISTRY [info] Found serial port: /dev/ttyUSB2
+13:30:19 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB2
+13:30:19 | REGISTRY [info] Discovered 3 serial port(s)
+13:30:19 | UNIT     [info] Event watchdog started
+13:30:21 | MQTT     [info] Received on config/1: [
+  {
+    "channelID": "1",
+    "loadPort": "/dev/ttyUSB0",
+    "loadIDN": "UNI-TREND,UTL8212+,CDLB225210095,V2.46",
+    "totalLoadChannelCount": 1,
+    "loadChannel": 1,
+    "loadBaudRate": 9600,
+    "supplyPort": "/dev/ttyUSB3",
+    "supplyIDN": "Uni-Trend,UDP6730,AWP7323380017,V1.07",
+    "supplyBaudRate": 9600,
+    "modulePort": "/dev/ttyUSB2",
+    "moduleIDN": "Module_1",
+    "moduleBaudRate": 9600
+  }
+]
+13:30:24 | CHANNEL  [info] Channel-1 worker thread started
+13:30:24 | UNIT     [info] Configuration successfully replaced
+13:30:24 | UNIT     [info] Telemetry thread started
+13:30:31 | MQTT     [info] Received on experiment/1: {
+  "channelID": "1",
+  "steps": [
+    {
+      "command": "Charge",
+      "voltage": 14.2,
+      "current": 1.0,
+      "cutoffVoltage": 4.2,
+      "duration": 3600
+    },
+    {
+      "command": "Discharge",
+      "current": 1.0,
+      "cutoffVoltage": -3.0,
+      "duration": 3600
+    },
+    {
+      "command": "Goto",
+      "additionalRepeats": 4, "targetSteps": 0
+    }
+  ]
+}
+13:30:31 | UNIT     [info] Experiment loaded for channel 1
+13:30:42 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "start"
+}
+13:30:42 | UNIT     [info] Control command 'start' queued for channel 1
+13:30:42 | CHANNEL  [info] Channel 1 starting charge: 14.200 V, 1.000 A, cutoff 4.200 V, max 3600 s
+13:30:44 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=14.180 V, 0.000 A
+13:30:44 | CHANNEL  [info] Channel 1 ending charge step: supply voltage 14.180 V reached cutoff 4.200 V
+13:30:46 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:30:47 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:30:48 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:30:49 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:30:51 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:30:52 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:30:53 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:30:54 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:30:55 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB2: Input/output error
+13:30:55 | MODULE   [warning] Write attempt 1/3 failed for command "STATE?" to Module-1
+13:30:55 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB2: Input/output error
+13:30:55 | MODULE   [warning] Write attempt 2/3 failed for command "STATE?" to Module-1
+13:30:55 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB2: Input/output error
+13:30:55 | MODULE   [warning] Write attempt 3/3 failed for command "STATE?" to Module-1
+13:30:55 | MODULE   [error] Failed to write command "STATE?" to Module-1 after 3 attempts
+13:31:11 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB1
+13:31:23 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB2
+13:31:32 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB4
+13:31:34 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB3: Input/output error
+13:31:34 | SUPPLY   [warning] Write attempt 1/3 failed for command "OUTP OFF" to Supply-1
+13:31:34 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB3: Input/output error
+13:31:34 | SUPPLY   [warning] Write attempt 2/3 failed for command "OUTP OFF" to Supply-1
+13:31:34 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB3: Input/output error
+13:31:34 | SUPPLY   [warning] Write attempt 3/3 failed for command "OUTP OFF" to Supply-1
+13:31:34 | SUPPLY   [error] Failed to write command "OUTP OFF" to Supply-1 after 3 attempts
+13:31:35 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB0: Input/output error
+13:31:35 | LOAD     [warning] Write attempt 1/3 failed for command "CHAN 1" to Load-1
+13:31:35 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB0: Input/output error
+13:31:35 | LOAD     [warning] Write attempt 2/3 failed for command "CHAN 1" to Load-1
+13:31:35 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB0: Input/output error
+13:31:35 | LOAD     [warning] Write attempt 3/3 failed for command "CHAN 1" to Load-1
+13:31:35 | LOAD     [error] Failed to write command "CHAN 1" to Load-1 after 3 attempts
+13:31:37 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:38 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:39 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:40 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:42 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:43 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:44 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:45 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:47 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:48 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:49 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:50 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:51 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:53 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:54 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:55 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:56 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:31:57 | LOAD     [warning] Query read attempt 1/1 failed for "INP?" to Load-1
+13:31:57 | LOAD     [error] Failed to query command "INP?" from Load-1 after 1 attempts
+13:32:04 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:32:04 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:32:04 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:32:04 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:32:04 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:32:07 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB2
+13:32:07 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB1: Input/output error
+13:32:07 | SUPPLY   [warning] Write attempt 1/3 failed for command "OUTP OFF" to Supply-1
+13:32:07 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB1: Input/output error
+13:32:07 | SUPPLY   [warning] Write attempt 2/3 failed for command "OUTP OFF" to Supply-1
+13:32:07 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB1: Input/output error
+13:32:07 | SUPPLY   [warning] Write attempt 3/3 failed for command "OUTP OFF" to Supply-1
+13:32:07 | SUPPLY   [error] Failed to write command "OUTP OFF" to Supply-1 after 3 attempts
+13:32:09 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB3
+13:32:30 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+13:32:30 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permis13:39:07 | MQTT     [info] Connected to 127.0.0.1
+13:39:07 | REGISTRY [info] Found serial port: /dev/ttyUSB0
+13:39:10 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB0
+13:39:10 | REGISTRY [info] Found serial port: /dev/ttyUSB1
+13:39:12 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB1
+13:39:12 | REGISTRY [info] Found serial port: /dev/ttyUSB3
+13:39:14 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB3
+13:39:14 | REGISTRY [info] Discovered 3 serial port(s)
+13:39:14 | UNIT     [info] Event watchdog started
+13:39:38 | MQTT     [info] Received on config/1: [
+  {
+    "channelID": "1",
+    "loadPort": "/dev/ttyUSB1",
+    "loadIDN": "UNI-TREND,UTL8212+,CDLB225210095,V2.46",
+    "totalLoadChannelCount": 1,
+    "loadChannel": 1,
+    "loadBaudRate": 9600,
+    "supplyPort": "/dev/ttyUSB0",
+    "supplyIDN": "Uni-Trend,UDP6730,AWP7323380017,V1.07",
+    "supplyBaudRate": 9600,
+    "modulePort": "/dev/ttyUSB3",
+    "moduleIDN": "Module_1",
+    "moduleBaudRate": 9600
+  }
+]
+13:39:38 | CHANNEL  [info] Channel 1 successfully connected Load (UNI-TREND,UTL8212+,CDLB225210095,V2.46)
+13:39:38 | CHANNEL  [info] Channel 1 successfully connected Supply (Uni-Trend,UDP6730,AWP7323380017,V1.07)
+13:39:40 | CHANNEL  [info] Channel 1 successfully connected Module (Module_1)
+13:39:40 | CHANNEL  [info] Channel-1 worker thread started
+13:39:40 | UNIT     [info] Configuration successfully replaced
+13:39:40 | UNIT     [info] Telemetry thread started
+13:39:52 | MQTT     [info] Received on experiment/1: {
+  "channelID": "1",
+  "steps": [
+    {
+      "command": "Charge",
+      "voltage": 14.2,
+      "current": 1.0,
+      "cutoffVoltage": 4.2,
+      "duration": 3600
+    },
+    {
+      "command": "Discharge",
+      "current": 1.0,
+      "cutoffVoltage": -3.0,
+      "duration": 3600
+    },
+    {
+      "command": "Goto",
+      "additionalRepeats": 4, "targetSteps": 0
+    }
+  ]
+}
+13:39:52 | UNIT     [info] Experiment loaded for channel 1
+13:39:58 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "start"
+}
+13:39:58 | UNIT     [info] Control command 'start' queued for channel 1
+13:39:58 | CHANNEL  [info] Channel 1 starting charge: 14.200 V, 1.000 A, cutoff 4.200 V, max 3600 s
+13:39:59 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=14.180 V, 0.000 A
+13:39:59 | CHANNEL  [info] Channel 1 ending charge step: supply voltage 14.180 V reached cutoff 4.200 V
+13:40:01 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:02 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:04 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:05 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:06 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:07 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:08 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:10 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:11 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:12 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:13 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB3: Input/output error
+13:40:13 | MODULE   [warning] Write attempt 1/3 failed for command "STATE?" to Module-1
+13:40:13 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB3: Input/output error
+13:40:13 | MODULE   [warning] Write attempt 2/3 failed for command "STATE?" to Module-1
+13:40:13 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB3: Input/output error
+13:40:13 | MODULE   [warning] Write attempt 3/3 failed for command "STATE?" to Module-1
+13:40:13 | MODULE   [error] Failed to write command "STATE?" to Module-1 after 3 attempts
+13:40:13 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:40:13 | UNIT     [warning] Device with IDN: Module_1 not found in registry, waiting for device to appear
+13:40:27 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB2
+13:40:27 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB2, attempting reconnection
+13:40:29 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB2
+13:40:29 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:40:30 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:31 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:32 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:34 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:40:35 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB1: Input/output error
+13:40:35 | LOAD     [warning] Write attempt 1/3 failed for command "CHAN 1" to Load-1
+13:40:35 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB1: Input/output error
+13:40:35 | LOAD     [warning] Write attempt 2/3 failed for command "CHAN 1" to Load-1
+13:40:35 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB1: Input/output error
+13:40:35 | LOAD     [warning] Write attempt 3/3 failed for command "CHAN 1" to Load-1
+13:40:35 | LOAD     [error] Failed to write command "CHAN 1" to Load-1 after 3 attempts
+13:40:35 | UNIT     [warning] Load device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) disconnected from port /dev/ttyUSB1, initiating reconnection for Channel 1
+13:40:35 | UNIT     [warning] Device with IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46 not found in registry, waiting for device to appear
+13:40:44 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:40:44 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:40:44 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:40:44 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:40:44 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:40:44 | UNIT     [warning] Device with IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46 not found in registry, waiting for device to appear
+13:40:47 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB3
+13:40:47 | UNIT     [info] Found device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB3, attempting reconnection
+13:40:47 | UNIT     [info] Successfully reconnected device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB3
+13:40:47 | UNIT     [info] Load reconnection completed for Channel 1, clearing state and restarting
+13:40:47 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB0: Input/output error
+13:40:47 | SUPPLY   [warning] Write attempt 1/3 failed for command "OUTP OFF" to Supply-1
+13:40:47 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB0: Input/output error
+13:40:47 | SUPPLY   [warning] Write attempt 2/3 failed for command "OUTP OFF" to Supply-1
+13:40:47 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB0: Input/output error
+13:40:47 | SUPPLY   [warning] Write attempt 3/3 failed for command "OUTP OFF" to Supply-1
+13:40:47 | SUPPLY   [error] Failed to write command "OUTP OFF" to Supply-1 after 3 attempts
+13:40:47 | UNIT     [warning] Supply device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) disconnected from port /dev/ttyUSB0, initiating reconnection for Channel 1
+13:40:47 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+13:40:49 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB4
+13:40:49 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+13:41:01 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB0
+13:41:01 | UNIT     [info] Found device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB0, attempting reconnection
+13:41:01 | UNIT     [info] Successfully reconnected device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB0
+13:41:01 | UNIT     [info] Supply reconnection completed for Channel 1, clearing state and restarting
+13:41:01 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB3: Input/output error
+13:41:01 | LOAD     [warning] Write attempt 1/3 failed for command "CHAN 1" to Load-1
+13:41:01 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB3: Input/output error
+13:41:01 | LOAD     [warning] Write attempt 2/3 failed for command "CHAN 1" to Load-1
+13:41:01 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB3: Input/output error
+13:41:01 | LOAD     [warning] Write attempt 3/3 failed for command "CHAN 1" to Load-1
+13:41:01 | LOAD     [error] Failed to write command "CHAN 1" to Load-1 after 3 attempts
+13:41:02 | UNIT     [warning] Load device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:02 | UNIT     [warning] Device with IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46 not found in registry, waiting for device to appear
+13:41:04 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB1
+13:41:04 | UNIT     [info] Found device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB1, attempting reconnection
+13:41:04 | UNIT     [info] Successfully reconnected device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB1
+13:41:04 | UNIT     [info] Load reconnection completed for Channel 1, clearing state and restarting
+13:41:04 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB2: Input/output error
+13:41:04 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:04 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB2: Input/output error
+13:41:04 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:04 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB2: Input/output error
+13:41:04 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:04 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:04 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB2, initiating reconnection for Channel 1
+13:41:04 | UNIT     [warning] Device with IDN: Module_1 not found in registry, waiting for device to appear
+13:41:07 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB3
+13:41:07 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+13:41:09 | SERIAL   [error] Failed to write "*IDN?" to /dev/ttyUSB3: Input/output error
+13:41:09 | MODULE   [warning] Write attempt 1/3 failed for command "*IDN?" to Module-1
+13:41:09 | SERIAL   [error] Failed to write "*IDN?" to /dev/ttyUSB3: Input/output error
+13:41:09 | MODULE   [warning] Write attempt 2/3 failed for command "*IDN?" to Module-1
+13:41:09 | SERIAL   [error] Failed to write "*IDN?" to /dev/ttyUSB3: Input/output error
+13:41:09 | MODULE   [warning] Write attempt 3/3 failed for command "*IDN?" to Module-1
+13:41:09 | MODULE   [error] Failed to write command "*IDN?" to Module-1 after 3 attempts
+13:41:09 | UNIT     [error] Reconnection failed for device (IDN: Module_1) at port /dev/ttyUSB2: Failed to write command "*IDN?" to Module-1
+13:41:09 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:09 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB1: Input/output error
+13:41:09 | LOAD     [warning] Write attempt 1/3 failed for command "CHAN 1" to Load-1
+13:41:09 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB1: Input/output error
+13:41:09 | LOAD     [warning] Write attempt 2/3 failed for command "CHAN 1" to Load-1
+13:41:09 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB1: Input/output error
+13:41:09 | LOAD     [warning] Write attempt 3/3 failed for command "CHAN 1" to Load-1
+13:41:09 | LOAD     [error] Failed to write command "CHAN 1" to Load-1 after 3 attempts
+13:41:09 | UNIT     [warning] Load device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) disconnected from port /dev/ttyUSB1, initiating reconnection for Channel 1
+13:41:09 | UNIT     [warning] Device with IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46 not found in registry, waiting for device to appear
+13:41:14 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB1
+13:41:14 | UNIT     [warning] Device with IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46 not found in registry, waiting for device to appear
+13:41:22 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB2
+13:41:22 | UNIT     [info] Found device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB2, attempting reconnection
+13:41:22 | UNIT     [info] Successfully reconnected device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB2
+13:41:22 | UNIT     [info] Load reconnection completed for Channel 1, clearing state and restarting
+13:41:22 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB0: Input/output error
+13:41:22 | SUPPLY   [warning] Write attempt 1/3 failed for command "OUTP OFF" to Supply-1
+13:41:22 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB0: Input/output error
+13:41:22 | SUPPLY   [warning] Write attempt 2/3 failed for command "OUTP OFF" to Supply-1
+13:41:22 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB0: Input/output error
+13:41:22 | SUPPLY   [warning] Write attempt 3/3 failed for command "OUTP OFF" to Supply-1
+13:41:22 | SUPPLY   [error] Failed to write command "OUTP OFF" to Supply-1 after 3 attempts
+13:41:22 | UNIT     [warning] Supply device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) disconnected from port /dev/ttyUSB0, initiating reconnection for Channel 1
+13:41:22 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+13:41:25 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB4
+13:41:25 | UNIT     [info] Found device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB4, attempting reconnection
+13:41:25 | UNIT     [info] Successfully reconnected device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB4
+13:41:25 | UNIT     [info] Supply reconnection completed for Channel 1, clearing state and restarting
+13:41:25 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:25 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:25 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:25 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:25 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:25 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:25 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:25 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:25 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:25 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:25 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:26 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:26 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:26 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:26 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:26 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:26 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:26 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:26 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:26 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:26 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:26 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:27 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:27 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:27 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:27 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:27 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:27 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:27 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:27 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:27 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:27 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:27 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:28 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:28 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:28 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:28 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:28 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:28 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:28 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:28 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:28 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:28 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:28 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:29 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:29 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:29 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:29 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:29 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:29 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:29 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:29 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:29 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:29 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:29 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:30 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:30 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:30 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:30 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:30 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:30 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:30 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:30 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:30 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:30 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:30 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:31 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:31 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:31 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:31 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:31 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:31 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:31 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:31 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:31 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:31 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:31 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:32 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:32 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:32 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:32 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:32 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:32 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:32 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:32 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:32 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:32 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:32 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:33 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:33 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:33 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:33 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:33 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:33 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:33 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:33 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:33 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:33 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:33 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:34 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:34 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:34 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:34 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:34 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:34 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:34 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:34 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:34 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:34 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:34 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:35 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:35 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:35 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:35 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:35 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:35 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:35 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:35 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:35 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:35 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:35 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:36 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:36 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:36 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:36 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:36 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:36 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:36 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:36 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:36 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:36 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:36 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:37 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:37 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:37 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:37 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:37 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:37 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:37 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:37 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:37 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:37 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:37 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:38 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:38 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:38 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:38 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:38 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:38 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:38 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:38 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:38 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:38 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:38 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:39 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:39 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:39 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:39 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:39 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:39 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:39 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:39 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:39 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:39 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:39 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:40 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:40 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:40 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:40 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:40 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:40 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:40 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:40 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:40 | UNIT     [error] Reconnect failed: device node not found at port /dev/ttyUSB3
+13:41:40 | UNIT     [warning] Node is empty, cannot reconnect
+13:41:40 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:41:41 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:41 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:41 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:41 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:41 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Input/output error
+13:41:41 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:41:41 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:41:41 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:41:41 | UNIT     [error] Reconnect13:56:35 | MQTT     [info] Connected to 127.0.0.1
+13:56:35 | REGISTRY [info] Found serial port: /dev/ttyUSB2
+13:56:38 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB2
+13:56:38 | REGISTRY [info] Found serial port: /dev/ttyUSB1
+13:56:40 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB1
+13:56:40 | REGISTRY [info] Found serial port: /dev/ttyUSB0
+13:56:42 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB0
+13:56:42 | REGISTRY [info] Discovered 3 serial port(s)
+13:56:42 | UNIT     [info] Event watchdog started
+13:57:06 | MQTT     [info] Received on config/1: [
+  {
+    "channelID": "1",
+    "loadPort": "/dev/ttyUSB2",
+    "loadIDN": "UNI-TREND,UTL8212+,CDLB225210095,V2.46",
+    "totalLoadChannelCount": 1,
+    "loadChannel": 1,
+    "loadBaudRate": 9600,
+    "supplyPort": "/dev/ttyUSB0",
+    "supplyIDN": "Uni-Trend,UDP6730,AWP7323380017,V1.07",
+    "supplyBaudRate": 9600,
+    "modulePort": "/dev/ttyUSB1",
+    "moduleIDN": "Module_1",
+    "moduleBaudRate": 9600
+  }
+]
+13:57:06 | CHANNEL  [info] Channel 1 successfully connected Load (UNI-TREND,UTL8212+,CDLB225210095,V2.46)
+13:57:06 | CHANNEL  [info] Channel 1 successfully connected Supply (Uni-Trend,UDP6730,AWP7323380017,V1.07)
+13:57:08 | CHANNEL  [info] Channel 1 successfully connected Module (Module_1)
+13:57:08 | CHANNEL  [info] Channel-1 worker thread started
+13:57:08 | UNIT     [info] Configuration successfully replaced
+13:57:08 | UNIT     [info] Telemetry thread started
+13:57:19 | MQTT     [info] Received on experiment/1: {
+  "channelID": "1",
+  "steps": [
+    {
+      "command": "Charge",
+      "voltage": 14.2,
+      "current": 1.0,
+      "cutoffVoltage": 4.2,
+      "duration": 3600
+    },
+    {
+      "command": "Discharge",
+      "current": 1.0,
+      "cutoffVoltage": -3.0,
+      "duration": 3600
+    },
+    {
+      "command": "Goto",
+      "additionalRepeats": 4, "targetSteps": 0
+    }
+  ]
+}
+13:57:19 | UNIT     [info] Experiment loaded for channel 1
+13:57:19 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB3
+13:57:22 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "start"
+}
+13:57:23 | UNIT     [info] Control command 'start' queued for channel 1
+13:57:23 | SERIAL   [error] Failed to write "VOLT 14.2" to /dev/ttyUSB0: Input/output error
+13:57:23 | SUPPLY   [warning] Write attempt 1/3 failed for command "VOLT 14.2" to Supply-1
+13:57:23 | SERIAL   [error] Failed to write "VOLT 14.2" to /dev/ttyUSB0: Input/output error
+13:57:23 | SUPPLY   [warning] Write attempt 2/3 failed for command "VOLT 14.2" to Supply-1
+13:57:23 | SERIAL   [error] Failed to write "VOLT 14.2" to /dev/ttyUSB0: Input/output error
+13:57:23 | SUPPLY   [warning] Write attempt 3/3 failed for command "VOLT 14.2" to Supply-1
+13:57:23 | SUPPLY   [error] Failed to write command "VOLT 14.2" to Supply-1 after 3 attempts
+13:57:23 | UNIT     [warning] Supply device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) disconnected from port /dev/ttyUSB0, initiating reconnection for Channel 1
+13:57:23 | UNIT     [info] Found device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB3, attempting reconnection
+13:57:23 | UNIT     [info] Successfully reconnected device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB3
+13:57:23 | UNIT     [info] Supply reconnection completed for Channel 1, clearing state and restarting
+13:57:24 | CHANNEL  [info] Channel 1 starting charge: 14.200 V, 1.000 A, cutoff 4.200 V, max 3600 s
+13:57:25 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=14.180 V, 0.000 A
+13:57:25 | CHANNEL  [info] Channel 1 ending charge step: supply voltage 14.180 V reached cutoff 4.200 V
+13:57:27 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:57:28 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:57:30 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:57:31 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:57:32 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:57:33 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:57:34 | SERIAL   [error] Failed to write "OUTP?" to /dev/ttyUSB3: Input/output error
+13:57:34 | SUPPLY   [warning] Write attempt 1/3 failed for command "OUTP?" to Supply-1
+13:57:34 | SERIAL   [error] Failed to write "OUTP?" to /dev/ttyUSB3: Input/output error
+13:57:34 | SUPPLY   [warning] Write attempt 2/3 failed for command "OUTP?" to Supply-1
+13:57:34 | SERIAL   [error] Failed to write "OUTP?" to /dev/ttyUSB3: Input/output error
+13:57:34 | SUPPLY   [warning] Write attempt 3/3 failed for command "OUTP?" to Supply-1
+13:57:34 | SUPPLY   [error] Failed to write command "OUTP?" to Supply-1 after 3 attempts
+13:57:34 | UNIT     [warning] Supply device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:57:34 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+13:57:34 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+13:57:44 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB0
+13:57:44 | UNIT     [info] Found device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB0, attempting reconnection
+13:57:44 | UNIT     [info] Successfully reconnected device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB0
+13:57:44 | UNIT     [info] Supply reconnection completed for Channel 1, clearing state and restarting
+13:57:45 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:57:46 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:57:47 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:57:49 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:57:50 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB2: Input/output error
+13:57:50 | LOAD     [warning] Write attempt 1/3 failed for command "CHAN 1" to Load-1
+13:57:50 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB2: Input/output error
+13:57:50 | LOAD     [warning] Write attempt 2/3 failed for command "CHAN 1" to Load-1
+13:57:50 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB2: Input/output error
+13:57:50 | LOAD     [warning] Write attempt 3/3 failed for command "CHAN 1" to Load-1
+13:57:50 | LOAD     [error] Failed to write command "CHAN 1" to Load-1 after 3 attempts
+13:57:50 | UNIT     [warning] Load device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) disconnected from port /dev/ttyUSB2, initiating reconnection for Channel 1
+13:57:50 | UNIT     [warning] Device with IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46 not found in registry, waiting for device to appear
+13:57:56 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB2
+13:57:56 | UNIT     [info] Found device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB2, attempting reconnection
+13:57:56 | UNIT     [info] Successfully reconnected device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB2
+13:57:56 | UNIT     [info] Load reconnection completed for Channel 1, clearing state and restarting
+13:57:57 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:57:58 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:57:59 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB1: Input/output error
+13:57:59 | MODULE   [warning] Write attempt 1/3 failed for command "STATE?" to Module-1
+13:57:59 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB1: Input/output error
+13:57:59 | MODULE   [warning] Write attempt 2/3 failed for command "STATE?" to Module-1
+13:57:59 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB1: Input/output error
+13:57:59 | MODULE   [warning] Write attempt 3/3 failed for command "STATE?" to Module-1
+13:57:59 | MODULE   [error] Failed to write command "STATE?" to Module-1 after 3 attempts
+13:57:59 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB1, initiating reconnection for Channel 1
+13:57:59 | UNIT     [warning] Device with IDN: Module_1 not found in registry, waiting for device to appear
+13:58:04 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB1
+13:58:04 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB1, attempting reconnection
+13:58:06 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB1
+13:58:06 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:58:08 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:58:09 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:58:10 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:58:11 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:58:12 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:58:13 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB2: Input/output error
+13:58:13 | LOAD     [warning] Write attempt 1/3 failed for command "CHAN 1" to Load-1
+13:58:13 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB2: Input/output error
+13:58:13 | LOAD     [warning] Write attempt 2/3 failed for command "CHAN 1" to Load-1
+13:58:13 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB2: Input/output error
+13:58:13 | LOAD     [warning] Write attempt 3/3 failed for command "CHAN 1" to Load-1
+13:58:13 | LOAD     [error] Failed to write command "CHAN 1" to Load-1 after 3 attempts
+13:58:13 | UNIT     [warning] Load device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) disconnected from port /dev/ttyUSB2, initiating reconnection for Channel 1
+13:58:13 | UNIT     [warning] Device with IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46 not found in registry, waiting for device to appear
+13:58:27 | SERIAL   [error] Failed to open /dev/ttyUSB2: Permission denied
+13:58:27 | SERIAL   [error] Failed to open /dev/ttyUSB2: Permission denied
+13:58:27 | SERIAL   [error] Failed to open /dev/ttyUSB2: Permission denied
+13:58:27 | SERIAL   [error] Failed to open /dev/ttyUSB2: Permission denied
+13:58:27 | SERIAL   [error] Failed to open /dev/ttyUSB2: Permission denied
+13:58:27 | UNIT     [warning] Device with IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46 not found in registry, waiting for device to appear
+13:58:30 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB3
+13:58:30 | UNIT     [info] Found device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB3, attempting reconnection
+13:58:30 | UNIT     [info] Successfully reconnected device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB3
+13:58:30 | UNIT     [info] Load reconnection completed for Channel 1, clearing state and restarting
+13:58:30 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB0: Input/output error
+13:58:30 | SUPPLY   [warning] Write attempt 1/3 failed for command "OUTP OFF" to Supply-1
+13:58:30 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB0: Input/output error
+13:58:30 | SUPPLY   [warning] Write attempt 2/3 failed for command "OUTP OFF" to Supply-1
+13:58:30 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB0: Input/output error
+13:58:30 | SUPPLY   [warning] Write attempt 3/3 failed for command "OUTP OFF" to Supply-1
+13:58:30 | SUPPLY   [error] Failed to write command "OUTP OFF" to Supply-1 after 3 attempts
+13:58:30 | UNIT     [warning] Supply device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) disconnected from port /dev/ttyUSB0, initiating reconnection for Channel 1
+13:58:30 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+13:58:33 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB4
+13:58:33 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+13:58:56 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB0
+13:58:56 | UNIT     [info] Found device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB0, attempting reconnection
+13:58:56 | UNIT     [info] Successfully reconnected device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB0
+13:58:56 | UNIT     [info] Supply reconnection completed for Channel 1, clearing state and restarting
+13:58:56 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB1: Input/output error
+13:58:56 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:58:56 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB1: Input/output error
+13:58:56 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:58:56 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB1: Input/output error
+13:58:56 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:58:56 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:58:57 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB1, initiating reconnection for Channel 1
+13:58:57 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB4, attempting reconnection
+13:58:59 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB4
+13:58:59 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+13:59:00 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:59:01 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:59:02 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:59:03 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:59:05 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:59:06 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+13:59:07 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB3: Input/output error
+13:59:07 | LOAD     [warning] Write attempt 1/3 failed for command "CHAN 1" to Load-1
+13:59:07 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB3: Input/output error
+13:59:07 | LOAD     [warning] Write attempt 2/3 failed for command "CHAN 1" to Load-1
+13:59:07 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB3: Input/output error
+13:59:07 | LOAD     [warning] Write attempt 3/3 failed for command "CHAN 1" to Load-1
+13:59:07 | LOAD     [error] Failed to write command "CHAN 1" to Load-1 after 3 attempts
+13:59:07 | UNIT     [warning] Load device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+13:59:07 | UNIT     [warning] Device with IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46 not found in registry, waiting for device to appear
+13:59:10 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:59:10 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:59:10 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:59:10 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:59:10 | SERIAL   [error] Failed to open /dev/ttyUSB1: Permission denied
+13:59:10 | UNIT     [warning] Device with IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46 not found in registry, waiting for device to appear
+13:59:13 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB2
+13:59:13 | UNIT     [info] Found device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB2, attempting reconnection
+13:59:13 | UNIT     [info] Successfully reconnected device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB2
+13:59:13 | UNIT     [info] Load reconnection completed for Channel 1, clearing state and restarting
+13:59:13 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB0: Input/output error
+13:59:13 | SUPPLY   [warning] Write attempt 1/3 failed for command "OUTP OFF" to Supply-1
+13:59:13 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB0: Input/output error
+13:59:13 | SUPPLY   [warning] Write attempt 2/3 failed for command "OUTP OFF" to Supply-1
+13:59:13 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB0: Input/output error
+13:59:13 | SUPPLY   [warning] Write attempt 3/3 failed for command "OUTP OFF" to Supply-1
+13:59:13 | SUPPLY   [error] Failed to write command "OUTP OFF" to Supply-1 after 3 attempts
+13:59:13 | UNIT     [warning] Supply device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) disconnected from port /dev/ttyUSB0, initiating reconnection for Channel 1
+13:59:13 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+13:59:16 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB3
+13:59:16 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+13:59:45 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB0
+13:59:45 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+13:59:57 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB1
+13:59:57 | UNIT     [info] Found device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB1, attempting reconnection
+13:59:57 | UNIT     [info] Successfully reconnected device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB1
+13:59:57 | UNIT     [info] Supply reconnection completed for Channel 1, clearing state and restarting
+13:59:57 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB4: Input/output error
+13:59:57 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+13:59:57 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB4: Input/output error
+13:59:57 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+13:59:57 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB4: Input/output error
+13:59:57 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+13:59:57 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+13:59:57 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB4, initiating reconnection for Channel 1
+13:59:57 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB0, attempting reconnection
+13:59:59 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB0
+13:59:59 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:00:00 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:01 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:03 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:04 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:05 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:06 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:07 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:09 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:10 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:11 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:12 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB2: Input/output error
+14:00:12 | LOAD     [warning] Write attempt 1/3 failed for command "CHAN 1" to Load-1
+14:00:12 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB2: Input/output error
+14:00:12 | LOAD     [warning] Write attempt 2/3 failed for command "CHAN 1" to Load-1
+14:00:12 | SERIAL   [error] Failed to write "CHAN 1" to /dev/ttyUSB2: Input/output error
+14:00:12 | LOAD     [warning] Write attempt 3/3 failed for command "CHAN 1" to Load-1
+14:00:12 | LOAD     [error] Failed to write command "CHAN 1" to Load-1 after 3 attempts
+14:00:12 | UNIT     [warning] Load device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) disconnected from port /dev/ttyUSB2, initiating reconnection for Channel 1
+14:00:12 | UNIT     [warning] Device with IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46 not found in registry, waiting for device to appear
+14:00:20 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB2
+14:00:20 | UNIT     [info] Found device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB2, attempting reconnection
+14:00:20 | UNIT     [info] Successfully reconnected device (IDN: UNI-TREND,UTL8212+,CDLB225210095,V2.46) at port /dev/ttyUSB2
+14:00:20 | UNIT     [info] Load reconnection completed for Channel 1, clearing state and restarting
+14:00:20 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB1: Input/output error
+14:00:20 | SUPPLY   [warning] Write attempt 1/3 failed for command "OUTP OFF" to Supply-1
+14:00:20 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB1: Input/output error
+14:00:20 | SUPPLY   [warning] Write attempt 2/3 failed for command "OUTP OFF" to Supply-1
+14:00:20 | SERIAL   [error] Failed to write "OUTP OFF" to /dev/ttyUSB1: Input/output error
+14:00:20 | SUPPLY   [warning] Write attempt 3/3 failed for command "OUTP OFF" to Supply-1
+14:00:20 | SUPPLY   [error] Failed to write command "OUTP OFF" to Supply-1 after 3 attempts
+14:00:20 | UNIT     [warning] Supply device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) disconnected from port /dev/ttyUSB1, initiating reconnection for Channel 1
+14:00:20 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+14:00:48 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB1
+14:00:48 | UNIT     [info] Found device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB1, attempting reconnection
+14:00:48 | UNIT     [info] Successfully reconnected device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) at port /dev/ttyUSB1
+14:00:48 | UNIT     [info] Supply reconnection completed for Channel 1, clearing state and restarting
+14:00:50 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:51 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:52 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:00:53 | SERIAL   [error] Failed to write "OUTP?" to /dev/ttyUSB1: Input/output error
+14:00:53 | SUPPLY   [warning] Write attempt 1/3 failed for command "OUTP?" to Supply-1
+14:00:53 | SERIAL   [error] Failed to write "OUTP?" to /dev/ttyUSB1: Input/output error
+14:00:53 | SUPPLY   [warning] Write attempt 2/3 failed for command "OUTP?" to Supply-1
+14:00:53 | SERIAL   [error] Failed to write "OUTP?" to /dev/ttyUSB1: Input/output error
+14:00:53 | SUPPLY   [warning] Write attempt 3/3 failed for command "OUTP?" to Supply-1
+14:00:53 | SUPPLY   [error] Failed to write command "OUTP?" to Supply-1 after 3 attempts
+14:00:53 | UNIT     [warning] Supply device (IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07) disconnected from port /dev/ttyUSB1, initiating reconnection for Channel 1
+14:00:53 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+14:01:00 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB1
+14:01:00 | UNIT     [warning] Device with IDN: Uni-Trend,UDP6730,AWP7323380017,V1.07 not found in registry, waiting for device to appear
+14:01:10 | REGISTRY 14:32:53 | MQTT     [info] Connected to 127.0.0.1
+14:32:53 | REGISTRY [info] Discovered 0 serial port(s)
+14:32:53 | UNIT     [info] Event watchdog started
+14:32:53 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+14:32:53 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+14:32:53 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+14:32:53 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+14:32:53 | SERIAL   [error] Failed to open /dev/ttyUSB0: Permission denied
+14:32:56 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB1
+14:32:59 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB2
+14:33:04 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB0
+14:33:24 | MQTT     [info] Received on config/1: [
+  {
+    "channelID": "1",
+    "loadPort": "/dev/ttyUSB1",
+    "loadIDN": "UNI-TREND,UTL8212+,CDLB225210095,V2.46",
+    "totalLoadChannelCount": 1,
+    "loadChannel": 1,
+    "loadBaudRate": 9600,
+    "supplyPort": "/dev/ttyUSB0",
+    "supplyIDN": "Uni-Trend,UDP6730,AWP7323380017,V1.07",
+    "supplyBaudRate": 9600,
+    "modulePort": "/dev/ttyUSB2",
+    "moduleIDN": "Module_1",
+    "moduleBaudRate": 9600
+  }
+]
+14:33:24 | CHANNEL  [info] Channel 1 successfully connected Load (UNI-TREND,UTL8212+,CDLB225210095,V2.46)
+14:33:24 | CHANNEL  [info] Channel 1 successfully connected Supply (Uni-Trend,UDP6730,AWP7323380017,V1.07)
+14:33:26 | CHANNEL  [info] Channel 1 successfully connected Module (Module_1)
+14:33:26 | CHANNEL  [info] Channel-1 worker thread started
+14:33:26 | UNIT     [info] Configuration successfully replaced
+14:33:26 | UNIT     [info] Telemetry thread started
+14:33:27 | MQTT     [info] Received on experiment/1: {
+  "channelID": "1",
+  "steps": [
+    {
+      "command": "Charge",
+      "voltage": 14.2,
+      "current": 1.0,
+      "cutoffVoltage": 4.2,
+      "duration": 3600
+    },
+    {
+      "command": "Discharge",
+      "current": 1.0,
+      "cutoffVoltage": -3.0,
+      "duration": 3600
+    },
+    {
+      "command": "Goto",
+      "additionalRepeats": 4, "targetSteps": 0
+    }
+  ]
+}
+14:33:27 | UNIT     [info] Experiment loaded for channel 1
+14:33:34 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "start"
+}
+14:33:34 | UNIT     [info] Control command 'start' queued for channel 1
+14:33:34 | CHANNEL  [info] Channel 1 starting charge: 14.200 V, 1.000 A, cutoff 4.200 V, max 3600 s
+14:33:35 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=14.180 V, 0.000 A
+14:33:35 | CHANNEL  [info] Channel 1 ending charge step: supply voltage 14.180 V reached cutoff 4.200 V
+14:33:37 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.020 V, 0.000 A
+14:33:38 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB2: Input/output error
+14:33:38 | MODULE   [warning] Write attempt 1/3 failed for command "STATE?" to Module-1
+14:33:38 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB2: Input/output error
+14:33:38 | MODULE   [warning] Write attempt 2/3 failed for command "STATE?" to Module-1
+14:33:38 | SERIAL   [error] Failed to write "STATE?" to /dev/ttyUSB2: Input/output error
+14:33:38 | MODULE   [warning] Write attempt 3/3 failed for command "STATE?" to Module-1
+14:33:38 | MODULE   [error] Failed to write command "STATE?" to Module-1 after 3 attempts
+14:33:38 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB2, initiating reconnection for Channel 1
+14:33:38 | UNIT     [warning] Device with IDN: Module_1 not found in registry, waiting for device to appear
+14:33:38 | UNIT     [warning] Device with IDN: Module_1 not found in registry, waiting for device to appear
+14:33:39 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:33:44 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB2
+14:33:44 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB2, attempting reconnection
+14:33:46 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB2
+14:33:46 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:33:47 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:33:48 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:33:49 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:33:51 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:33:52 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:33:53 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:33:54 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:33:56 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:33:57 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "pause"
+}
+14:33:57 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:33:57 | UNIT     [info] Control command 'pause' queued for channel 1
+14:34:09 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB3
+14:34:15 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB3
+14:34:20 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "resume"
+}
+14:34:20 | UNIT     [info] Control command 'resume' queued for channel 1
+14:34:20 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB2: Input/output error
+14:34:20 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:20 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB2: Input/output error
+14:34:20 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:20 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB2: Input/output error
+14:34:20 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:20 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+14:34:20 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB2, initiating reconnection for Channel 1
+14:34:20 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:34:21 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:34:22 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:34:22 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:34:22 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:34:22 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:22 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:22 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:22 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:22 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:22 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:22 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+14:34:22 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:34:22 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:34:23 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:34:24 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:34:24 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:34:24 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:34:24 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:24 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:24 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:24 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:24 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:24 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:24 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+14:34:25 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:34:25 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:34:25 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:34:27 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:34:27 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:34:27 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:34:27 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:27 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:27 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:27 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:27 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:27 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:27 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+14:34:27 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:34:27 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:34:28 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:34:29 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:34:29 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:34:29 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:34:29 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:29 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:29 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:29 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:29 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:29 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:29 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+14:34:29 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:34:29 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:34:30 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:34:31 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:34:31 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:34:31 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:34:31 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:31 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:31 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:31 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:31 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:31 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:31 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+14:34:31 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:34:31 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:34:32 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:34:33 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:34:33 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:34:33 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:34:33 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:33 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:33 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:33 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:33 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:33 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:33 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+14:34:33 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:34:33 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:34:34 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:34:35 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:34:35 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:34:35 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:34:35 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:35 | MODULE   [warning] Write attempt 1/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:35 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:35 | MODULE   [warning] Write attempt 2/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:35 | SERIAL   [error] Failed to write "STATE DISCHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:34:35 | MODULE   [warning] Write attempt 3/3 failed for command "STATE DISCHARGE" to Module-1
+14:34:35 | MODULE   [error] Failed to write command "STATE DISCHARGE" to Module-1 after 3 attempts
+14:34:35 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:34:35 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:34:36 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:34:37 | SERIAL   [error] Failed to write "*IDN?" to /dev/ttyUSB3: Input/output error
+14:34:37 | MODULE   [warning] Write attempt 1/3 failed for command "*IDN?" to Module-1
+14:34:37 | SERIAL   [error] Failed to write "*IDN?" to /dev/ttyUSB3: Input/output error
+14:34:37 | MODULE   [warning] Write attempt 2/3 failed for command "*IDN?" to Module-1
+14:34:37 | SERIAL   [error] Failed to write "*IDN?" to /dev/ttyUSB3: Input/output error
+14:34:37 | MODULE   [warning] Write attempt 3/3 failed for command "*IDN?" to Module-1
+14:34:37 | MODULE   [error] Failed to write command "*IDN?" to Module-1 after 3 attempts
+14:34:37 | UNIT     [error] Reconnection failed for device (IDN: Module_1) at port /de14:50:50 | MQTT     [info] Connected to 127.0.0.1
+14:50:50 | REGISTRY [info] Found serial port: /dev/ttyUSB2
+14:50:52 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB2
+14:50:52 | REGISTRY [info] Found serial port: /dev/ttyUSB1
+14:50:55 | REGISTRY [info] Found 'UNI-TREND,UTL8212+,CDLB225210095,V2.46' on /dev/ttyUSB1
+14:50:55 | REGISTRY [info] Found serial port: /dev/ttyUSB0
+14:50:57 | REGISTRY [info] Found 'Uni-Trend,UDP6730,AWP7323380017,V1.07' on /dev/ttyUSB0
+14:50:57 | REGISTRY [info] Discovered 3 serial port(s)
+14:50:57 | UNIT     [info] Event watchdog started
+14:51:09 | MQTT     [info] Received on config/1: [
+  {
+    "channelID": "1",
+    "loadPort": "/dev/ttyUSB1",
+    "loadIDN": "UNI-TREND,UTL8212+,CDLB225210095,V2.46",
+    "totalLoadChannelCount": 1,
+    "loadChannel": 1,
+    "loadBaudRate": 9600,
+    "supplyPort": "/dev/ttyUSB0",
+    "supplyIDN": "Uni-Trend,UDP6730,AWP7323380017,V1.07",
+    "supplyBaudRate": 9600,
+    "modulePort": "/dev/ttyUSB2",
+    "moduleIDN": "Module_1",
+    "moduleBaudRate": 9600
+  }
+]
+14:51:09 | CHANNEL  [info] Channel 1 successfully connected Load (UNI-TREND,UTL8212+,CDLB225210095,V2.46)
+14:51:09 | CHANNEL  [info] Channel 1 successfully connected Supply (Uni-Trend,UDP6730,AWP7323380017,V1.07)
+14:51:11 | CHANNEL  [info] Channel 1 successfully connected Module (Module_1)
+14:51:11 | CHANNEL  [info] Channel-1 worker thread started
+14:51:11 | UNIT     [info] Configuration successfully replaced
+14:51:11 | UNIT     [info] Telemetry thread started
+14:51:23 | MQTT     [info] Received on experiment/1: {
+  "channelID": "1",
+  "steps": [
+    {
+      "command": "Charge",
+      "voltage": 14.2,
+      "current": 1.0,
+      "cutoffVoltage": 4.2,
+      "duration": 3600
+    },
+    {
+      "command": "Discharge",
+      "current": 1.0,
+      "cutoffVoltage": -3.0,
+      "duration": 3600
+    },
+    {
+      "command": "Goto",
+      "additionalRepeats": 4, "targetSteps": 0
+    }
+  ]
+}
+14:51:24 | UNIT     [info] Experiment loaded for channel 1
+14:51:31 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "start"
+}
+14:51:31 | UNIT     [info] Control command 'start' queued for channel 1
+14:51:31 | CHANNEL  [info] Channel 1 starting charge: 14.200 V, 1.000 A, cutoff 4.200 V, max 3600 s
+14:51:32 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=14.170 V, 0.000 A
+14:51:32 | CHANNEL  [info] Channel 1 ending charge step: supply voltage 14.170 V reached cutoff 4.200 V
+14:51:35 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:51:36 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:51:37 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:51:38 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:51:39 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "stop"
+}
+14:51:39 | UNIT     [info] Control command 'stop' queued for channel 1
+14:51:45 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB3
+14:51:50 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "start"
+}
+14:51:50 | UNIT     [info] Control command 'start' queued for channel 1
+14:51:50 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB2: Input/output error
+14:51:50 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:51:50 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB2: Input/output error
+14:51:50 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:51:50 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB2: Input/output error
+14:51:50 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:51:50 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:51:50 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB2, initiating reconnection for Channel 1
+14:51:50 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:51:51 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:51:52 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:51:52 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:51:52 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:51:52 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:51:52 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:51:52 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:51:52 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:51:52 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:51:52 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:51:52 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:51:52 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:51:52 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:51:53 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:51:54 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:51:54 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:51:54 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:51:54 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:51:54 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:51:54 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:51:54 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:51:54 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:51:54 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:51:54 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:51:54 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:51:54 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:51:55 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:51:56 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:51:56 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:51:56 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:51:56 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:51:56 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:51:56 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:51:56 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:51:56 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:51:56 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:51:56 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:51:56 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:51:56 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:51:57 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:51:58 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:51:58 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:51:58 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:51:58 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:51:58 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:51:58 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:51:58 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:51:58 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:51:58 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:51:58 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:51:58 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:51:58 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:51:59 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:00 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:52:00 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:52:00 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:00 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:00 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:00 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:00 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:00 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:00 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:00 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:00 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:52:00 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:52:01 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:02 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:52:02 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:52:02 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:02 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:02 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:02 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:02 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:02 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:02 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:02 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:02 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:52:02 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:52:03 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:04 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:52:04 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:52:04 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:04 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:04 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:04 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:04 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:04 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:04 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:04 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:05 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:52:05 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:52:05 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:07 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:52:07 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:52:07 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:07 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:07 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:07 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:07 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:07 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:07 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:07 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:07 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:52:07 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:52:08 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:09 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:52:09 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:52:09 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:09 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:09 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:09 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:09 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:09 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:09 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:09 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:09 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:52:09 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:52:10 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:11 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:52:11 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:52:11 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:11 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:11 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:11 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:11 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:11 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:11 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:11 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:11 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:52:11 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:52:12 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:13 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:52:13 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:52:13 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:13 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:13 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:13 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:13 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:13 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:13 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:13 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:13 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:52:13 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:52:14 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:15 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:52:15 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:52:15 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:15 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:15 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:15 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:15 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:15 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:15 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:15 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:15 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:52:15 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:52:16 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:17 | SERIAL   [error] Failed to write "*IDN?" to /dev/ttyUSB3: Input/output error
+14:52:17 | MODULE   [warning] Write attempt 1/3 failed for command "*IDN?" to Module-1
+14:52:17 | SERIAL   [error] Failed to write "*IDN?" to /dev/ttyUSB3: Input/output error
+14:52:17 | MODULE   [warning] Write attempt 2/3 failed for command "*IDN?" to Module-1
+14:52:17 | SERIAL   [error] Failed to write "*IDN?" to /dev/ttyUSB3: Input/output error
+14:52:17 | MODULE   [warning] Write attempt 3/3 failed for command "*IDN?" to Module-1
+14:52:17 | MODULE   [error] Failed to write command "*IDN?" to Module-1 after 3 attempts
+14:52:17 | UNIT     [error] Reconnection failed for device (IDN: Module_1) at port /dev/ttyUSB3: Failed to write command "*IDN?" to Module-1
+14:52:17 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:17 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Input/output error
+14:52:17 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:17 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Input/output error
+14:52:17 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:17 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Input/output error
+14:52:17 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:17 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:17 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:52:17 | UNIT     [warning] Device with IDN: Module_1 not found in registry, waiting for device to appear
+14:52:17 | UNIT     [warning] Device with IDN: Module_1 not found in registry, waiting for device to appear
+14:52:18 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:22 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB2
+14:52:22 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB2, attempting reconnection
+14:52:24 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB2
+14:52:24 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:24 | CHANNEL  [info] Channel 1 starting charge: 14.200 V, 1.000 A, cutoff 4.200 V, max 3600 s
+14:52:25 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=14.180 V, 0.000 A
+14:52:25 | CHANNEL  [info] Channel 1 ending charge step: supply voltage 14.180 V reached cutoff 4.200 V
+14:52:28 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.020 V, 0.000 A
+14:52:29 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:52:30 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:52:31 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "stop"
+}
+14:52:31 | CHANNEL  [info] Channel 1 measurements: load=0.000 V, 0.000 A; supply=0.000 V, 0.000 A
+14:52:31 | UNIT     [info] Control command 'stop' queued for channel 1
+14:52:40 | REGISTRY [info] Found 'Module_1' on /dev/ttyUSB3
+14:52:42 | MQTT     [info] Received on control/1: {
+  "channelID": "1",
+  "command": "start"
+}
+14:52:42 | UNIT     [info] Control command 'start' queued for channel 1
+14:52:42 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB2: Input/output error
+14:52:42 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:42 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB2: Input/output error
+14:52:42 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:42 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB2: Input/output error
+14:52:42 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:42 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:42 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB2, initiating reconnection for Channel 1
+14:52:42 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:52:43 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:44 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:52:44 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:52:44 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:44 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:44 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:44 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:44 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:44 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:44 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:44 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:44 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:52:44 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:52:45 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:46 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:52:46 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:52:46 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:46 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:46 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:46 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:46 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:46 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:46 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:46 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:46 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:52:46 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:52:47 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:48 | MODULE   [error] Module-1 IDN mismatch /dev/ttyUSB3
+14:52:48 | UNIT     [info] Successfully reconnected device (IDN: Module_1) at port /dev/ttyUSB3
+14:52:48 | UNIT     [info] Module reconnection completed for Channel 1, clearing state and restarting
+14:52:48 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:48 | MODULE   [warning] Write attempt 1/3 failed for command "STATE CHARGE" to Module-1
+14:52:48 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:48 | MODULE   [warning] Write attempt 2/3 failed for command "STATE CHARGE" to Module-1
+14:52:48 | SERIAL   [error] Failed to write "STATE CHARGE" to /dev/ttyUSB3: Bad file descriptor
+14:52:48 | MODULE   [warning] Write attempt 3/3 failed for command "STATE CHARGE" to Module-1
+14:52:48 | MODULE   [error] Failed to write command "STATE CHARGE" to Module-1 after 3 attempts
+14:52:48 | UNIT     [warning] Module device (IDN: Module_1) disconnected from port /dev/ttyUSB3, initiating reconnection for Channel 1
+14:52:48 | UNIT     [info] Found device (IDN: Module_1) at port /dev/ttyUSB3, attempting reconnection
+14:52:49 | CHANNEL  [error] Channel 1 encountered an error state, disabling all devices and stopping the experiment
+14:52:50 | SERIAL   [error] Failed to write "*IDN?" to /dev/ttyUSB3: Input/output error
+14:52:50 | MODULE   [warning] Write attempt 1/3 failed for command "*IDN?" to Module-1
+14:52:50 | SERIAL   [error] Failed to write "*IDN?" to /dev/ttyUSB3: Input/output error
+14:52:50 | MODULE   [warning] Write attempt 2/3 failed for command "*IDN?" to Module-1
+14:52:50 | SERIAL   [error] Failed to write "*IDN?" to /dev/ttyUSB3: Input/output error
+14:52:50 | MODULE   [warning] Write attempt 3/3 failed for command "*IDN?" to Module-1
+14:52:50 | MODULE   [error] Failed to write command "*IDN?" to Module-1 after 3 attempts
+14:52:50 | UNIT     [error] Reconnection failed for device (IDN: Module_1) at port /dev/ttyUSB3: Failed to write command "*IDN?" to Module-1
+14:52:50 

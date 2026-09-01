@@ -1,6 +1,5 @@
 #include <fmt/format.h>
 #include <nlohmann/json.hpp>
-#include <iostream>
 
 #include "mqtt/mqtt.h"
 #include "helper/logger/logger.h"

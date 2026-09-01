@@ -1,7 +1,6 @@
 #include <string>
 #include <exception>
 #include <unordered_set>
-#include <iostream>
 
 #include "mqtt/mqtt.h"
 #include "helper/helper.h"
@@ -143,9 +142,84 @@ void UnitConfiguration::checkForEvents()
         }
     }
     
-    if(newChannelEvent)
+    if (newChannelEvent)
     {
-        std::cout << nodeID << " - " << newChannelEvent->type << ": " << newChannelEvent->message << "\n";
+        if (newChannelEvent->type == ChannelEventType::LOAD_DISCONNECTED)
+        {
+            Logger::logger().log_unit()->warn("Load device (IDN: {}) disconnected from port {}, initiating reconnection for Channel {}", newChannelEvent->deviceIDN, newChannelEvent->devicePort, newChannelEvent->channelID);
+            reconnectDevice(loadList, *newChannelEvent);
+            Logger::logger().log_unit()->info("Load reconnection completed for Channel {}, clearing state and restarting", newChannelEvent->channelID);
+
+        }
+
+        else if (newChannelEvent->type == ChannelEventType::SUPPLY_DISCONNECTED)
+        {
+            Logger::logger().log_unit()->warn("Supply device (IDN: {}) disconnected from port {}, initiating reconnection for Channel {}", newChannelEvent->deviceIDN, newChannelEvent->devicePort, newChannelEvent->channelID);
+            reconnectDevice(supplyList, *newChannelEvent);
+            Logger::logger().log_unit()->info("Supply reconnection completed for Channel {}, clearing state and restarting", newChannelEvent->channelID);
+        }
+
+        else if (newChannelEvent->type == ChannelEventType::MODULE_DISCONNECTED)
+        {
+            Logger::logger().log_unit()->warn("Module device (IDN: {}) disconnected from port {}, initiating reconnection for Channel {}", newChannelEvent->deviceIDN, newChannelEvent->devicePort, newChannelEvent->channelID);
+            reconnectDevice(moduleList, *newChannelEvent);
+            Logger::logger().log_unit()->info("Module reconnection completed for Channel {}, clearing state and restarting", newChannelEvent->channelID);
+        }
+
+        channelList.at(newChannelEvent->channelID).clearState();
+        channelList.at(newChannelEvent->channelID).enqueueCommand("start");
+    }
+}
+
+template <typename T>
+void UnitConfiguration::reconnectDevice(std::unordered_map<std::string, T>& devices, const ChannelEvent& event)
+{
+    Logger::logger().log_unit()->debug("Beginning reconnection process for device with IDN: {}", event.deviceIDN);
+    
+    auto node = devices.extract(event.devicePort);
+
+    if (node.empty())
+    {
+        Logger::logger().log_unit()->error("Reconnect failed: device node not found at port {}", event.devicePort);
+        devices.insert(std::move(node));
+        Logger::logger().log_unit()->warn("Node is empty, cannot reconnect");
+        return;
+    }
+    
+    try
+    {
+        Logger::logger().log_unit()->debug("Disconnecting device (IDN: {}) from current port {}", event.deviceIDN, event.devicePort);
+        node.mapped().disconnect();
+        Logger::logger().log_unit()->debug("Device (IDN: {}) successfully disconnected from port {}", event.deviceIDN, event.devicePort);
+
+        while (!node.mapped().isConnected())
+        {
+            Logger::logger().log_unit()->debug("Searching for device with IDN: {}", event.deviceIDN);
+            std::string port = registry.findDeviceByIDN(event.deviceIDN);
+
+            if (port.empty())
+            {
+                Logger::logger().log_unit()->warn("Device with IDN: {} not found in registry, waiting for device to appear", event.deviceIDN);
+                registry.waitForDevice();
+                Logger::logger().log_unit()->debug("Device scan completed, retrying search for IDN: {}", event.deviceIDN);
+                continue;
+            }
+            else
+            {
+                Logger::logger().log_unit()->info("Found device (IDN: {}) at port {}, attempting reconnection", event.deviceIDN, port);
+                node.mapped().setPort(port);
+                node.mapped().connect();
+                node.key() = port;
+                Logger::logger().log_unit()->info("Successfully reconnected device (IDN: {}) at port {}", event.deviceIDN, port);
+                devices.insert(std::move(node));
+                return;
+            }
+        }
+    }
+    catch (const std::exception& e)
+    {
+        Logger::logger().log_unit()->error("Reconnection failed for device (IDN: {}) at port {}: {}", event.deviceIDN, event.devicePort, e.what());
+        devices.insert(std::move(node));
     }
 }
 
